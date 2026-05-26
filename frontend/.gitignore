@@ -1,0 +1,13 @@
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Imágenes subidas localmente durante desarrollo
+assets/images/uploads/
