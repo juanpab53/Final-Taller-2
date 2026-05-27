@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum role {
+  CLIENT
+  ADMIN
+}
+
+enum cart_state {
+  ACTIVE
+  INACTIVE
+  COMPLETED
+}
+
+enum order_state {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum payment_method {
+  CREDIT_CARD
+  DEBIT_CARD
+  BANK_TRANSFER
+  CASH
+  PAYPAL
+}
+
+enum payment_status {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+// ─── Modelos ───────────────────────────────────────────
+
+model user{
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(80) @unique
+  tel       String   @db.VarChar(50)
+  role      role     @default(CLIENT)
+  password  String   @db.VarChar(50)
+  cart      cart?
+  orders order[]
+}
+
+model cart {
+  id        String     @id @default(uuid()) @db.Uuid
+  user_id   String     @unique @db.Uuid
+  user      user      @relation(fields: [user_id], references: [id])
+  state     cart_state  @default(ACTIVE)
+  cartItems cartItems[]
+}
+
+model cartItems {
+  id        String     @id @default(uuid()) @db.Uuid
+  quantity  Int        @db.Integer
+  cart_id   String     @db.Uuid
+  cart      cart       @relation(fields: [cart_id], references: [id])
+  book_id   String     @db.Uuid
+  book      books      @relation(fields: [book_id], references: [id])
+}
+
+model order{
+  id          String   @id @default(uuid()) @db.Uuid
+  state       order_state @default(PENDING)
+  direction   String   @db.VarChar(255) 
+  created_at  DateTime @default(now()) @db.Timestamp
+  total       Float 
+  user_id     String   @db.Uuid
+  user        user @relation(fields: [user_id], references: [id])
+  pay         pay?
+  order_details order_details[]
+}
+
+model pay{
+  id            String        @id @default(uuid()) @db.Uuid
+  amount        Decimal       @db.Decimal(10, 2) 
+  receipt       String        
+  paymentMethod payment_method
+  status        payment_status @default(PENDING)
+  issuedAt      DateTime      @default(now())    
+  paidAt        DateTime?    
+  orderId       String        @unique @db.Uuid
+  order         order         @relation(fields: [orderId], references: [id])
+}
+
+model order_details{
+  id          String   @id @default(uuid()) @db.Uuid
+  quantity    Int      @db.Integer
+  unit_price  Float
+  book_id     String   @db.Uuid
+  book        books    @relation(fields: [book_id], references: [id])
+  order_id    String   @db.Uuid
+  order       order    @relation(fields: [order_id], references: [id])
+}
+
+model books{
+  id                String   @id @default(uuid()) @db.Uuid
+  name              String   @db.VarChar(255)
+  price             Float
+  stock             Int      @db.Integer
+  image_url         String?  @db.VarChar(500)
+  publication_date  DateTime @db.Date
+  description       String?  @db.Text
+  order_details     order_details[]
+  cartItems         cartItems[]
+  author_id         String   @db.Uuid
+  author            authors  @relation(fields: [author_id], references: [id])
+  category_id       String   @db.Uuid
+  category          categories @relation(fields: [category_id], references: [id])
+}
+
+model authors{
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(255)
+  books         books[]
+}
+
+model categories{
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(255)
+  books         books[]
+}
