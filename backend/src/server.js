@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { fileURLToPath } from "url";
 import path from "path";
+import { errorHandler } from "./shared/middleware/errorHandler.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,8 @@ app.use("/", express.static(publicPath));
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
