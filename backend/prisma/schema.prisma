@@ -27,14 +27,6 @@ enum order_state {
   CANCELLED
 }
 
-enum payment_method {
-  CREDIT_CARD
-  DEBIT_CARD
-  BANK_TRANSFER
-  CASH
-  PAYPAL
-}
-
 enum payment_status {
   PENDING
   PAID
@@ -44,12 +36,12 @@ enum payment_status {
 // ─── Modelos ───────────────────────────────────────────
 
 model user{
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String   @db.VarChar(255)
-  email     String   @db.VarChar(80) @unique
-  tel       String   @db.VarChar(50)
-  role      role     @default(CLIENT)
-  password  String   @db.VarChar(50)
+  id            String   @id @default(uuid()) @db.Uuid
+  name          String   @db.VarChar(255)
+  email         String   @db.VarChar(80) @unique
+  tel           String   @db.VarChar(50)
+  role          role     @default(CLIENT)
+  password_hash String   @db.VarChar(60)
   cart      cart?
   orders order[]
 }
@@ -59,16 +51,18 @@ model cart {
   user_id   String     @unique @db.Uuid
   user      user      @relation(fields: [user_id], references: [id])
   state     cart_state  @default(ACTIVE)
-  cartItems cartItems[]
+  expired_at DateTime?   @db.Timestamp
+  cartItems cartItem[]
 }
 
-model cartItems {
+model cartItem {
   id        String     @id @default(uuid()) @db.Uuid
   quantity  Int        @db.Integer
+  unit_price Float
   cart_id   String     @db.Uuid
   cart      cart       @relation(fields: [cart_id], references: [id])
   book_id   String     @db.Uuid
-  book      books      @relation(fields: [book_id], references: [id])
+  book      book       @relation(fields: [book_id], references: [id])
 }
 
 model order{
@@ -80,32 +74,34 @@ model order{
   user_id     String   @db.Uuid
   user        user @relation(fields: [user_id], references: [id])
   pay         pay?
-  order_details order_details[]
+  order_details order_detail[]
 }
 
 model pay{
-  id            String        @id @default(uuid()) @db.Uuid
-  amount        Decimal       @db.Decimal(10, 2) 
-  receipt       String        
-  paymentMethod payment_method
-  status        payment_status @default(PENDING)
-  issuedAt      DateTime      @default(now())    
-  paidAt        DateTime?    
-  orderId       String        @unique @db.Uuid
-  order         order         @relation(fields: [orderId], references: [id])
+  id                          String        @id @default(uuid()) @db.Uuid
+  amount                      Decimal       @db.Decimal(10, 2) 
+  receipt                     String        
+  status                      payment_status @default(PENDING)
+  issuedAt                    DateTime      @default(now())    
+  paidAt                      DateTime?    
+  orderId                     String        @unique @db.Uuid
+  order                       order         @relation(fields: [orderId], references: [id])
+  stripe_checkout_session_id  String?       @unique @db.VarChar(255)
+  stripe_payment_intent_id    String?       @unique @db.VarChar(255)
+  currency                    String        @default("usd") @db.VarChar(3)
 }
 
-model order_details{
+model order_detail{
   id          String   @id @default(uuid()) @db.Uuid
   quantity    Int      @db.Integer
   unit_price  Float
   book_id     String   @db.Uuid
-  book        books    @relation(fields: [book_id], references: [id])
+  book        book     @relation(fields: [book_id], references: [id])
   order_id    String   @db.Uuid
   order       order    @relation(fields: [order_id], references: [id])
 }
 
-model books{
+model book{
   id                String   @id @default(uuid()) @db.Uuid
   name              String   @db.VarChar(255)
   price             Float
@@ -113,22 +109,37 @@ model books{
   image_url         String?  @db.VarChar(500)
   publication_date  DateTime @db.Date
   description       String?  @db.Text
-  order_details     order_details[]
-  cartItems         cartItems[]
+  lenguage          String   @db.VarChar(50)
+  order_details     order_detail[]
+  cartItems         cartItem[]
   author_id         String   @db.Uuid
-  author            authors  @relation(fields: [author_id], references: [id])
+  author            author   @relation(fields: [author_id], references: [id])
   category_id       String   @db.Uuid
-  category          categories @relation(fields: [category_id], references: [id])
+  category          category @relation(fields: [category_id], references: [id])
+
+  @@index([name])
 }
 
-model authors{
+model author{
   id        String   @id @default(uuid()) @db.Uuid
   name      String   @db.VarChar(255)
-  books         books[]
+  books         book[]
+
+  @@index([name])
 }
 
-model categories{
+model category{
   id        String   @id @default(uuid()) @db.Uuid
   name      String   @db.VarChar(255)
-  books         books[]
+  books         book[]
+
+  @@index([name])
+}
+
+model stripe_event{
+  id              String    @id @default(uuid()) @db.Uuid
+  stripe_event_id String    @unique @db.VarChar(255)
+  type            String    @db.VarChar(100)
+  created_at      DateTime  @default(now()) @db.Timestamp
+  processed_at    DateTime? @db.Timestamp
 }

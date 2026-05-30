@@ -45,6 +45,10 @@ CREATE DATABASE ecommerce_books;
 
 O desde **pgAdmin**: clic derecho en **Databases** → **Create** → **Database** → nombre: `ecommerce_books` → **Save**.
 
+### Crear la shadow database
+
+Prisma necesita una shadow database para generar migraciones. Crealá con el mismo método pero con nombre `ecommerce_books_shadow`.
+
 ## Variables de Entorno
 
 El archivo `.env` en `backend/` contiene la configuración del servidor y la base de datos. Cada developer debe crearlo a partir de la plantilla:
@@ -74,6 +78,14 @@ Copy-Item .env.example .env
 | `DB_USER`        | Usuario de PostgreSQL          | `postgres`                       |
 | `DB_PASSWORD`    | Contraseña de PostgreSQL       | `tu_contraseña`                  |
 | `DATABASE_URL`   | URL completa de conexión       | `postgresql://postgres:pass@...` |
+| `SHADOW_DATABASE_URL` | URL para shadow database de Prisma | `postgresql://postgres:pass@.../ecommerce_books_shadow` |
+
+### Variables de Stripe
+
+| Variable             | Descripción                              | Ejemplo                          |
+|----------------------|------------------------------------------|----------------------------------|
+| `STRIPE_SECRET_KEY`  | Clave secreta del servidor (sk_test)     | `sk_test_tu_llave_secreta_aqui` |
+| `STRIPE_WEBHOOK_SECRET` | Secret para verificar webhooks de Stripe | `whsec_tu_llave_secreta_aqui` |
 
 > **Importante**: `DATABASE_URL` debe coincidir con las demás variables. Si cambias `DB_PASSWORD`, actualízala también dentro de `DATABASE_URL`.
 
