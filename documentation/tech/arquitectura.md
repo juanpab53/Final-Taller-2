@@ -29,16 +29,16 @@ módulo/
 
 ### Módulos
 
-| Módulo       | Propósito                                |
-|--------------|------------------------------------------|
+| Módulo        | Propósito                                 |
+| -------------- | ------------------------------------------ |
 | `auth`       | Autenticación y autorización (JWT)       |
-| `authors`    | Gestión de autores                       |
-| `books`      | Catálogo de libros                       |
-| `cart`       | Carrito de compras                       |
-| `categories` | Categorías de libros                     |
-| `orders`     | Pedidos y checkout                       |
-| `payments`   | Procesamiento de pagos                   |
-| `users`      | Gestión de usuarios                      |
+| `authors`    | Gestión de autores                        |
+| `books`      | Catálogo de libros                        |
+| `cart`       | Carrito de compras                         |
+| `categories` | Categorías de libros                      |
+| `orders`     | Pedidos y checkout                         |
+| `payments`   | Procesamiento de pagos                     |
+| `users`      | Gestión de usuarios                       |
 | `shared`     | Configuración, errores, middleware común |
 
 ## Frontend
@@ -57,10 +57,10 @@ Express sirve tanto la API como los archivos estáticos del frontend, eliminando
 
 ## Tecnologías
 
-| Capa         | Tecnología                          |
-|--------------|-------------------------------------|
-| Backend      | Node.js + Express 5                 |
-| ORM          | Prisma 7                            |
-| BD           | PostgreSQL                          |
-| Frontend     | HTML5, CSS3, JavaScript vanilla     |
-| Paquetería   | pnpm                                |
+| Capa        | Tecnología                     |
+| ----------- | ------------------------------- |
+| Backend     | Node.js + Express 5             |
+| ORM         | Prisma 7                        |
+| BD          | PostgreSQL                      |
+| Frontend    | HTML5, CSS3, JavaScript vanilla |
+| Paquetería | pnpm                            |
