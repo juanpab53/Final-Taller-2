@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bibliotheca - Iniciar sesión</title>
+  <link rel="stylesheet" href="/shared/css/styles.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="bg-background text-on-background font-sans">
+    <header
+      class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
+      <div class="flex items-center gap-8">
+        <a href="/" class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary no-underline">
+          BIBLIOTHECA</a>
+        <nav class="hidden md:flex items-center gap-6">
+          <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+            href="/">Catálogo</a>
+          <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+            href="/">Novedades</a>
+          <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+            href="/">Nosotros</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="toggleTheme()"
+          class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
+          title="Cambiar tema"></button>
+        <a href="/pages/login.html"
+          class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
+        <a href="/pages/cart.html"
+          class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">shopping_cart</a>
+        <button class="md:hidden material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full"
+          data-icon="menu">menu</button>
+      </div>
+    </header>
+
+    <main class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-card__title">Iniciar sesión</h1>
+        <p class="auth-card__subtitle">Accede a tu cuenta para gestionar pedidos y tu colección.</p>
+
+        <!-- Error message (hidden by default) -->
+        <div class="auth-error hidden" data-state="error">
+          <span class="material-symbols-outlined" style="font-size: 16px;">error</span>
+          <span>Correo o contraseña inválidos. Intenta de nuevo.</span>
+        </div>
+
+        <form class="auth-form">
+          <div class="auth-form__field">
+            <label class="auth-form__label" for="login-email">Correo electrónico</label>
+            <input id="login-email" class="auth-form__input" type="email" placeholder="tucorreo@email.com" required />
+          </div>
+          <div class="auth-form__field">
+            <label class="auth-form__label" for="login-password">Contraseña</label>
+            <input id="login-password" class="auth-form__input" type="password" placeholder="••••••••" required />
+          </div>
+          <div class="auth-form__actions">
+            <button class="btn btn--primary btn--full" type="submit">Iniciar sesión</button>
+          </div>
+        </form>
+
+        <p class="auth-form__footer">
+          ¿No tienes cuenta? <a href="/pages/register.html">Crea una</a>
+        </p>
+      </div>
+    </main>
+
+    <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
+        <div class="flex flex-col gap-4">
+          <h2 class="font-serif text-headline-lg-mobile text-primary">BIBLIOTHECA</h2>
+          <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un santuario digital
+            para medios físicos y exploración intelectual curada.</p>
+        </div>
+        <div class="flex flex-wrap gap-x-12 gap-y-4">
+          <div class="flex flex-col gap-2">
+            <span class="font-mono text-label-sm text-primary font-bold mb-1">CONECTAR</span>
+            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+              href="#">Instagram</a>
+            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+              href="#">Twitter</a>
+          </div>
+          <div class="flex flex-col gap-2">
+            <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
+            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+              href="#">Política de privacidad</a>
+            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+              href="#">Términos del servicio</a>
+          </div>
+          <div class="flex flex-col gap-2">
+            <span class="font-mono text-label-sm text-primary font-bold mb-1">TIENDA</span>
+            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+              href="#">Envíos</a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
+        <span class="font-mono text-label-sm uppercase text-secondary">© 2024 BIBLIOTHECA. TODOS LOS DERECHOS
+          RESERVADOS.</span>
+        <div class="flex gap-2">
+          <div class="w-2 h-2 rounded-full bg-primary"></div>
+          <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+        </div>
+      </div>
+    </footer>
+
+  <script src="/shared/js/utils.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

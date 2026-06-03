@@ -3,15 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BookStore - Admin</title>
+  <title>Bibliotheca — Admin</title>
   <link rel="stylesheet" href="/shared/css/styles.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Panel de Administración</h1>
-  <p>Gestión de libros, autores, categorías y pedidos</p>
+  <div class="admin-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidenav">
+      <div class="sidenav__header">
+        <h1 class="sidenav__title">Admin Panel</h1>
+        <p class="sidenav__subtitle">Gestión</p>
+      </div>
+      <nav class="sidenav__nav">
+        <a class="sidenav__link" href="#">
+          <span class="material-symbols-outlined">dashboard</span>
+          Panel
+        </a>
+        <a class="sidenav__link is-active" href="#">
+          <span class="material-symbols-outlined">auto_stories</span>
+          Inventario
+        </a>
+        <a class="sidenav__link" href="#">
+          <span class="material-symbols-outlined">receipt_long</span>
+          Pedidos
+        </a>
+        <a class="sidenav__link" href="#">
+          <span class="material-symbols-outlined">settings</span>
+          Ajustes
+        </a>
+      </nav>
+      <div class="sidenav__footer">
+        <p class="sidenav__footer-brand">BIBLIOTHECA</p>
+        <p class="sidenav__footer-version">Panel de administración</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <span class="admin-topbar__logo">BIBLIOTHECA</span>
+        <div class="admin-topbar__right">
+          <nav class="admin-topbar__nav">
+            <a class="admin-topbar__link" href="/">Catálogo</a>
+            <a class="admin-topbar__link" href="#">Novedades</a>
+            <a class="admin-topbar__link" href="#">Nosotros</a>
+          </nav>
+          <div class="flex items-center gap-4" style="display: flex; align-items: center; gap: 1rem;">
+            <button onclick="toggleTheme()"
+              class="theme-toggle material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
+              title="Cambiar tema"></button>
+            <a href="/pages/login.html"
+              class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">person</a>
+            <a href="/pages/cart.html"
+              class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">shopping_cart</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+
+        <!-- Section Header -->
+        <section class="admin-section-header">
+          <div>
+            <h2 class="admin-section-header__title">Inventario</h2>
+            <p class="admin-section-header__path">ARCHIVO / INVENTARIO / LISTA_MAESTRA</p>
+          </div>
+          <div class="admin-section-header__actions">
+            <button class="btn btn--outline">Exportar CSV</button>
+            <button class="btn btn--primary">
+              <span class="material-symbols-outlined" style="font-size: 14px;">add</span>
+              Añadir libro
+            </button>
+          </div>
+        </section>
+
+        <!-- Inventory Table -->
+        <section class="inventory-table-wrap">
+          <table class="inventory-table">
+            <thead>
+              <tr>
+                <th>Portada</th>
+                <th>Título y metadatos</th>
+                <th>Sección</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th class="align-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="6" style="padding: 3rem 1.5rem; text-align: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; color: var(--color-secondary);">
+                  No hay libros registrados. Utiliza "Añadir libro" para agregar el primer título al catálogo.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="admin-footer">
+        <span class="admin-footer__logo">BIBLIOTHECA</span>
+        <div class="admin-footer__links">
+          <a class="admin-footer__link" href="/">Catálogo</a>
+          <a class="admin-footer__link" href="#">Política de privacidad</a>
+          <a class="admin-footer__link" href="#">Términos del servicio</a>
+        </div>
+        <span class="admin-footer__copy">© 2024 BIBLIOTHECA. TODOS LOS DERECHOS RESERVADOS.</span>
+      </footer>
+
+    </main>
+  </div>
 
   <script src="/shared/js/utils.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
