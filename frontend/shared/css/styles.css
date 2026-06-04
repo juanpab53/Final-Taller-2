@@ -156,6 +156,22 @@
   --color-primary-tint:            #b0aead;
 }
 
+/* ── Theme Transition ───────────────────────────────────────
+   Applied only during toggle (not on page load) to avoid
+   a flash. JS adds .theme-transitioning to <html> for 500ms.
+   ─────────────────────────────────────────────────────────── */
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    color            350ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     350ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       350ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill             350ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke           350ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 /* ── Reset & Base ─────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;

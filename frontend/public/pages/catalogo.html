@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FERVOR — Catálogo</title>
+    <link rel="stylesheet" href="/shared/css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body class="bg-background text-on-background font-sans">
+
+    <header
+        class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
+        <div class="flex items-center gap-8">
+            <a href="../index.html"
+                class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary no-underline">
+                FERVOR</a>
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+                    href="catalogo.html">Catálogo</a>
+                <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+                    href="landing.html">Nosotros</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleTheme()"
+                class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
+                title="Cambiar tema"></button>
+            <a href="login.html"
+                class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
+            <a href="cart.html"
+                class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">shopping_cart</a>
+        </div>
+    </header>
+
+    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+
+        <!-- Hero del catálogo -->
+        <section class="py-stack-lg border-b border-outline-variant">
+            <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">[ FERVOR —
+                TIENDA ]</span>
+            <h1 class="font-serif text-[40px] md:text-display-title text-primary mt-unit mb-stack-sm leading-tight">
+                Catálogo</h1>
+            <p class="font-sans text-body-lg text-secondary max-w-xl">
+                Todo nuestro repertorio disponible. Encuentra desde clásicos de arquitectura y diseño hasta ensayos
+                filosóficos y fotografía de autor.
+            </p>
+        </section>
+
+        <!-- Búsqueda y filtros -->
+        <section class="py-stack-md border-b border-outline-variant">
+            <div class="flex flex-col gap-4">
+
+                <!-- Tabs: Buscar / Filtrar -->
+                <div
+                    class="flex items-center gap-1 w-fit border border-outline-variant rounded-lg p-1 bg-surface-container-lowest">
+                    <button id="tab-search"
+                        class="catalog-tab catalog-tab--active font-mono text-label-sm uppercase tracking-wider px-4 py-2 rounded-md transition-all duration-200"
+                        data-tab="search">
+                        Buscar
+                    </button>
+                    <button id="tab-filter"
+                        class="catalog-tab font-mono text-label-sm uppercase tracking-wider px-4 py-2 rounded-md transition-all duration-200"
+                        data-tab="filter">
+                        Filtrar
+                    </button>
+                </div>
+
+                <!-- Panel: Búsqueda por nombre -->
+                <div id="panel-search" class="flex items-center gap-3">
+                    <div class="relative flex-1 max-w-lg">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary"
+                            style="font-size: 20px;">search</span>
+                        <input id="search-input" class="auth-form__input pl-10 w-full" type="search"
+                            placeholder="Buscar por título..." autocomplete="off" />
+                    </div>
+                    <button id="search-clear"
+                        class="hidden font-mono text-label-sm uppercase tracking-wider text-secondary hover:text-primary transition-colors">
+                        Limpiar
+                    </button>
+                </div>
+
+                <!-- Panel: Filtros por autor y/o categoría -->
+                <div id="panel-filter" class="hidden flex flex-col md:flex-row gap-3">
+                    <div class="flex flex-col gap-1 flex-1 max-w-xs">
+                        <label class="font-mono text-label-sm text-secondary uppercase tracking-wider"
+                            for="filter-author">
+                            Autor
+                        </label>
+                        <input id="filter-author" class="auth-form__input" type="text" placeholder="Ej. Dieter Rams"
+                            autocomplete="off" />
+                    </div>
+                    <div class="flex flex-col gap-1 flex-1 max-w-xs">
+                        <label class="font-mono text-label-sm text-secondary uppercase tracking-wider"
+                            for="filter-category">
+                            Categoría
+                        </label>
+                        <select id="filter-category" class="auth-form__input">
+                            <option value="">Todas las categorías</option>
+                            <!-- Se llena dinámicamente con las categorías del backend -->
+                        </select>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <button id="filter-apply"
+                            class="btn btn--primary font-mono text-label-sm uppercase tracking-wider px-6 py-2">
+                            Aplicar
+                        </button>
+                        <button id="filter-clear"
+                            class="font-mono text-label-sm uppercase tracking-wider text-secondary hover:text-primary transition-colors px-3 py-2">
+                            Limpiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resultado activo (chip) -->
+                <div id="active-filter-chip" class="hidden flex items-center gap-2">
+                    <span class="font-mono text-label-sm text-secondary uppercase tracking-widest">Mostrando:</span>
+                    <span id="active-filter-label"
+                        class="flex items-center gap-1 font-mono text-label-sm text-primary border border-outline-variant rounded-full px-3 py-1 bg-surface-container">
+                    </span>
+                    <button id="chip-clear"
+                        class="material-symbols-outlined text-secondary hover:text-primary transition-colors"
+                        style="font-size: 16px;">
+                        close
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Estado: cargando -->
+        <div id="books-loading" class="py-stack-lg grid grid-cols-2 md:grid-cols-4 gap-x-gutter gap-y-stack-lg">
+            <div class="book-skeleton animate-pulse" aria-hidden="true">
+                <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+                <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+                <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+                <div class="h-3 bg-surface-container rounded w-full"></div>
+            </div>
+            <div class="book-skeleton animate-pulse" aria-hidden="true">
+                <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+                <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+                <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+                <div class="h-3 bg-surface-container rounded w-full"></div>
+            </div>
+            <div class="book-skeleton animate-pulse" aria-hidden="true">
+                <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+                <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+                <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+                <div class="h-3 bg-surface-container rounded w-full"></div>
+            </div>
+            <div class="book-skeleton animate-pulse" aria-hidden="true">
+                <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+                <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+                <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+                <div class="h-3 bg-surface-container rounded w-full"></div>
+            </div>
+        </div>
+
+        <!-- Estado: error -->
+        <div id="books-error" class="hidden flex flex-col items-center gap-4 py-16 text-center">
+            <span class="material-symbols-outlined text-secondary" style="font-size: 48px;">error_outline</span>
+            <p class="font-sans text-body-lg text-secondary">No se pudieron cargar los libros.</p>
+            <button id="books-retry"
+                class="btn btn--secondary font-mono text-label-sm uppercase tracking-wider px-6 py-2 border border-outline-variant rounded hover:bg-surface-container transition-colors">
+                Reintentar
+            </button>
+        </div>
+
+        <!-- Estado: sin resultados -->
+        <div id="books-empty" class="hidden flex flex-col items-center gap-4 py-16 text-center">
+            <span class="material-symbols-outlined text-secondary" style="font-size: 48px;">search_off</span>
+            <p class="font-sans text-body-lg text-secondary">No encontramos resultados para tu búsqueda.</p>
+            <button id="empty-clear"
+                class="font-mono text-label-sm uppercase tracking-wider text-secondary hover:text-primary underline transition-colors">
+                Ver todo el catálogo
+            </button>
+        </div>
+
+        <!-- Grid de libros -->
+        <div id="books-content" class="hidden pt-stack-lg">
+            <div id="books-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-gutter gap-y-stack-lg"
+                aria-label="Catálogo de libros">
+                <!-- Se llena dinámicamente -->
+            </div>
+
+            <!-- Paginación -->
+            <div id="pagination"
+                class="flex items-center justify-between py-stack-lg border-t border-outline-variant mt-stack-lg">
+                <button id="page-prev"
+                    class="flex items-center gap-2 font-mono text-label-sm uppercase tracking-wider text-secondary hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    disabled>
+                    <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+                    Anterior
+                </button>
+
+                <div class="flex items-center gap-2">
+                    <span id="page-info" class="font-mono text-label-sm text-secondary"></span>
+                    <div id="page-dots" class="flex items-center gap-1 ml-3"></div>
+                </div>
+
+                <button id="page-next"
+                    class="flex items-center gap-2 font-mono text-label-sm uppercase tracking-wider text-secondary hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    Siguiente
+                    <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="py-stack-lg"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
+            <div class="flex flex-col gap-4">
+                <h2 class="font-serif text-headline-lg-mobile text-primary">FERVOR</h2>
+                <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un santuario
+                    digital
+                    para medios físicos y exploración intelectual curada.</p>
+            </div>
+            <div class="flex flex-wrap gap-x-12 gap-y-4">
+                <div class="flex flex-col gap-2">
+                    <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
+                    <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+                        href="#">Política de privacidad</a>
+                    <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+                        href="#">Términos del servicio</a>
+                </div>
+            </div>
+        </div>
+        <div
+            class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
+            <span class="font-mono text-label-sm uppercase text-secondary">© 2026 FERVOR. TODOS LOS DERECHOS
+                RESERVADOS.</span>
+        </div>
+    </footer>
+    <script src="/shared/js/utils.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

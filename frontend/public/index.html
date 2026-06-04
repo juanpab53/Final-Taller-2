@@ -1,220 +1,152 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bibliotheca — Inicio</title>
+  <title>FERVOR — Inicio</title>
   <link rel="stylesheet" href="/shared/css/styles.css" />
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
+
 <body class="bg-background text-on-background font-sans">
-    <header
-      class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
-      <div class="flex items-center gap-8">
-        <h1 class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary">
-          BIBLIOTHECA</h1>
-        <nav class="hidden md:flex items-center gap-6">
-          <a class="font-sans text-button-text uppercase tracking-wider text-primary border-b-2 border-primary pb-1 transition-colors duration-200"
-            href="/">Catálogo</a>
-          <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
-            href="#">Novedades</a>
-          <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
-            href="#">Nosotros</a>
-        </nav>
+  <header
+    class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
+    <div class="flex items-center gap-8">
+      <a href="index.html"
+        class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary no-underline">
+        FERVOR</a>
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+          href="pages/catalogo.html">Catálogo</a>
+        <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+          href="pages/landing.html">Nosotros</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()"
+        class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
+        title="Cambiar tema"></button>
+      <a href="pages/login.html"
+        class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
+      <a href="pages/cart.html"
+        class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">shopping_cart</a>
+    </div>
+  </header>
+  <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+    <!-- Hero -->
+    <section class="py-stack-lg border-b border-outline-variant">
+      <div class="max-w-3xl">
+        <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">Lieteratura
+          latínoamericana</span>
+        <h2 class="font-serif text-[40px] md:text-display-title text-primary mt-unit mb-stack-md leading-tight">
+          Colección destacada: El Archivo Moderno</h2>
+        <p class="font-sans text-body-lg text-secondary max-w-xl">Una selección de clásicos contemporáneos y
+          publicaciones arquitectónicas centradas en el diseño minimalista y la evolución del pensamiento estructural.
+        </p>
       </div>
-      <div class="flex items-center gap-4">
-        <button onclick="toggleTheme()"
-          class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
-          title="Cambiar tema"></button>
-        <a href="/pages/login.html"
-          class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
-        <a href="/pages/cart.html"
-          class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">shopping_cart</a>
-        <button class="md:hidden material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full"
-          data-icon="menu">menu</button>
-      </div>
-    </header>
-    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
-      <!-- Hero -->
-      <section class="py-stack-lg border-b border-outline-variant">
-        <div class="max-w-3xl">
-          <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">[ COLECCIÓN
-            CURADA 04 ]</span>
-          <h2
-            class="font-serif text-[40px] md:text-display-title text-primary mt-unit mb-stack-md leading-tight">
-            Colección destacada: El Archivo Moderno</h2>
-          <p class="font-sans text-body-lg text-secondary max-w-xl">Una selección de clásicos contemporáneos y
-            publicaciones arquitectónicas centradas en el diseño minimalista y la evolución del pensamiento estructural.</p>
+    </section>
+    <!-- Sección: Destacados -->
+    <section class="py-stack-lg">
+
+      <!-- Encabezado del carrusel -->
+      <div class="flex items-center justify-between mb-stack-md">
+        <div>
+          <span class="font-mono text-label-sm text-secondary uppercase tracking-widest block mb-1">[ SELECCIÓN ]</span>
+          <h2 class="font-serif text-[28px] md:text-headline-lg text-primary leading-tight">Populares</h2>
         </div>
-      </section>
-      <!-- Grilla de libros -->
-      <section class="grid grid-cols-2 md:grid-cols-4 gap-x-gutter gap-y-stack-lg pt-stack-lg">
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de El Vacío en la Estructura" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDJM6KCudNnso9_RqBALd0J6UYfi7n4DOQqNd8iRo8K46dBPRr_rWsOd2BOOkjKJPZDTNX5UC4QotszTq0UezjgzhVQCH9Kj1uPhvp8KSS2m7vEVEVBnzUTHXFSrMBVdPktrvTSJNE-7z2Ep4BX1pZ3cAj3za0mrqIobI4hFY2tCUey7bdGQ_aCLOraOyMIooOkLqT90kdN9ED3SEiG7QzCrhCmQG9yRV-Gq0vI3gXO_evDXbfG5b9hw9fp53LmjoWX-nGfts_0w" />
-            <div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity"></div>
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ ARQUITECTURA ]</span>
-            <h3 class="font-serif text-book-title-card text-primary group-hover:text-primary-tint transition-colors">
-              El Vacío en la Estructura</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">A. J. Steiner</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$45.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Orígenes Sans-Serif" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw6YdOytzn86tuIxgizvZ_u85a6PghE7HDuTQxX1eQzLxbqYM52nD5mYd26cUvFE-5AfnXsQsrCKEmcWGmfbMop2Ifl4RXhw1rzAJKTqJ35YdffpOoA031Pccytnqw0SgQMDkX3mpeC1m3vcsZ334VIzuM9SLmQ3re_aiz3b_B_RM6xayAMsysQBX4R5KXzdCq2WVf7gp86pHYV6y8GZjtOyY_09Q7JdCYdW8B5xtRdrveMJz9Fv1VLtRSnZsByQDG0D-uCcFQ29A" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ TIPOGRAFÍA ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Orígenes Sans-Serif</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Lars Müller</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$62.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Archivo de Luz" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMEsSd342-yob9PaVenlJ9QI5-WcllxBAnYA3Ff-xjvHzwcRnBtsGrFT8SsU3azk4JmmAlZ7shmclelVoXE0ShbjRpuxiLXYpHmBMdUL0Tf-4WPuFsqlybriOttB9_P5XCIFCqgiQgHzwbAZ71UV8FziM00o0JxlJlnUrHlqXFlJYHsd3kwZ_HZt6AfeFS_3_KyKTZF2ScXDUFkn1XyoR1B-WUGThgRn01Oy7zlcrMj1Kxh1ibo9j4srHAtS3Btri9L4noBKYjrFk" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ HISTORIA ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Archivo de Luz</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Elena Rossi</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$38.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Sistemas Modulares" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS9XV-mbKTaldoIMonk7JofGYWF7wyQUzBpiCSS8HTfvdClnYBrmB3PvYaPzVvlNEMXNAkxd8AS4Jyzas3dSTAToYvN6XrNU6_dtuhQQPhlsyWvsOC99CUYrpIHzHDZxt55zY7-5h56gnubXGA47dhbJ4j8RScZtJjI6XZlhFMu-OnIGrAeTBpExPNKU4bITrCXPGOVPs7CE0dKUH6pK7bK7a03mWIvC95WqG51iKIMH6a0dAg3_vVoO_lZcHr5tOzen7dkHgnz2E" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ DISEÑO ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Sistemas Modulares</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Dieter Rams</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$55.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Simplicidad en Movimiento" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9Cnatyj5GTdeZemxpO-tc9NdgCU0tRi9Vvn-xyAtlp7FK9OKKkHGm-zc_kIi-Pye2vz2byIPs28MIbiqbRLugdw_Jr37Ra1TG6fWH_lb4SSgtL9tK1jsaxYiQwsTk6Cylb9NXZdaHL6PDwtwc4NVF_eVbmnk3rx4wJI9q6WW09erwx0ncfkikcPG4h_xjUTDKwyQMduemxwOOQ3QF8JI3ccxhQixHM7_i6MaXeUGe_D0hA89w7seiLpVDQuSRAomwiSuyjFVutj0" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ FILOSOFÍA ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Simplicidad en Movimiento</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Kenji Ito</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$29.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de La Mente Serena" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4bh78CZzKZFHMHqYkJeIGUNVBegaLGvuemxCHHLolMDHIT56rMLc3kEYJfNNyaJxDXtMPebGtgFs4W1BYwRrDoYf_CLnQorXaxTV1islFsg4dFVqwuGuFIjIzcapK_RXHsxIA-tojipxsM5WcqwHt42Sf-7t2fiQT3mN9tpzkpp3CGTG6ZfCkEpIG2cW4CNfD2bkWs7Jx-Y86SB6GWMvYG59TSYoWdG-si-wx--4EZ5V3enAVT5Ri6YvmSwYZizrgrNcPZYg7xhM" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ ENSAYOS ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">La Mente Serena</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Sarah Chen</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$32.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Espacio Negativo" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1GdtxNv6t94ZITgjpjgxH4dszHh2TmlTR2RepFzcZ7XDUB1gqOxbPgOwqk2g_ZQmV1Cg-wrevjG719kMrHLCvR1S2VtmQVn0xm6z88nRJon3daU5zLIPink1zVZkT_sLSaWg79Uvyc7l3PAsVJwbpWEXvehYOweepn8FWSV8yGpHfaAApFUVXrS4EUoVnOFhIkaeUfyZsfeNJT2odmCZMqIdmGNMFGBHXf4blLlhb4n8riuapwciyUwmMGe-tsUxGKbhOahpfwwI" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ ARTE ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Espacio Negativo</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Marcus V.</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$70.00</span>
-            </div>
-          </div>
-        </a>
-        <a href="/pages/book-detail.html"
-          class="book-card group cursor-pointer p-3 rounded-xl border border-transparent hover:border-outline-variant hover:bg-surface-container-lowest transition-all duration-300">
-          <div class="aspect-[3/4] overflow-hidden mb-stack-sm relative bg-surface-container rounded-lg">
-            <img alt="Portada de Realismo Puro" class="w-full h-full object-cover book-hover-effect"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYEyJd2oWl2EIfVls5jq__S0FA40wBWaM10h6O06io7on_7GwXkstKycaC__9LJCcIKHhK4gFlMDGOT0dQG7k8zF3zjvJV2SkbS5ldaHv33SLJ42odXd0gIrjIyDDu1BtUAvrjpP_YUGuYlL2bziSKK15gDfO9OtjlCbRPr_mRBuWGgBH_a_pdLOHVxxbQ06ez1BOvxP5KvidD8v0JdWWoOvDFaR8oRF2WhsF860ySTTFyufIGfkMEHkvXn1QTzIrkdSEg95HbPSk" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <span class="font-mono text-label-sm text-on-secondary-container uppercase tracking-wider">[ FOTOGRAFÍA ]</span>
-            <h3 class="font-serif text-book-title-card text-primary">Realismo Puro</h3>
-            <div class="flex justify-between items-baseline mt-1">
-              <span class="font-sans text-body-md text-secondary italic">Oskar Wilde</span>
-              <span class="font-mono text-label-sm font-bold text-primary">$48.00</span>
-            </div>
-          </div>
-        </a>
-      </section>
-      <div class="py-stack-lg border-t border-outline-variant mt-stack-lg"></div>
-    </main>
-    <!-- Footer -->
-    <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
-      <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
-        <div class="flex flex-col gap-4">
-          <h2 class="font-serif text-headline-lg-mobile text-primary">BIBLIOTHECA</h2>
-          <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un refugio digital
-            para los libros físicos y la exploración intelectual.</p>
-        </div>
-        <div class="flex flex-wrap gap-x-12 gap-y-4">
-          <div class="flex flex-col gap-2">
-            <span class="font-mono text-label-sm text-primary font-bold mb-1">CONECTAR</span>
-            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
-              href="#">Instagram</a>
-            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
-              href="#">Twitter</a>
-          </div>
-          <div class="flex flex-col gap-2">
-            <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
-            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
-              href="#">Aviso de privacidad</a>
-            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
-              href="#">Términos del servicio</a>
-          </div>
-          <div class="flex flex-col gap-2">
-            <span class="font-mono text-label-sm text-primary font-bold mb-1">TIENDA</span>
-            <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
-              href="#">Envíos</a>
-          </div>
+        <div class="flex items-center gap-2">
+          <!-- Indicadores de página -->
+          <div id="carousel-dots" class="flex items-center gap-1 mr-3"></div>
+          <!-- Flechas -->
+          <button id="carousel-prev"
+            class="material-symbols-outlined text-primary p-2 rounded-full border border-outline-variant hover:bg-surface-container disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+            aria-label="Anterior" disabled>
+            arrow_back
+          </button>
+          <button id="carousel-next"
+            class="material-symbols-outlined text-primary p-2 rounded-full border border-outline-variant hover:bg-surface-container disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+            aria-label="Siguiente">
+            arrow_forward
+          </button>
         </div>
       </div>
-      <div
-        class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
-        <span class="font-mono text-label-sm uppercase text-secondary">© 2024 BIBLIOTHECA. TODOS LOS DERECHOS
-          RESERVADOS.</span>
-        <div class="flex gap-2">
-          <div class="w-2 h-2 rounded-full bg-primary"></div>
-          <div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+
+      <!-- Estado: cargando -->
+      <div id="books-loading" class="grid grid-cols-2 md:grid-cols-4 gap-x-gutter gap-y-stack-lg">
+        <div class="book-skeleton animate-pulse" aria-hidden="true">
+          <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+          <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+          <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+          <div class="h-3 bg-surface-container rounded w-full"></div>
+        </div>
+        <div class="book-skeleton animate-pulse" aria-hidden="true">
+          <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+          <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+          <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+          <div class="h-3 bg-surface-container rounded w-full"></div>
+        </div>
+        <div class="book-skeleton animate-pulse" aria-hidden="true">
+          <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+          <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+          <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+          <div class="h-3 bg-surface-container rounded w-full"></div>
+        </div>
+        <div class="book-skeleton animate-pulse" aria-hidden="true">
+          <div class="aspect-[3/4] bg-surface-container rounded-lg mb-stack-sm"></div>
+          <div class="h-3 bg-surface-container rounded w-1/2 mb-2"></div>
+          <div class="h-4 bg-surface-container rounded w-3/4 mb-2"></div>
+          <div class="h-3 bg-surface-container rounded w-full"></div>
         </div>
       </div>
-    </footer>
+
+      <!-- Estado: error -->
+      <div id="books-error" class="hidden flex flex-col items-center gap-4 py-16 text-center">
+        <span class="material-symbols-outlined text-secondary" style="font-size: 48px;">error_outline</span>
+        <p class="font-sans text-body-lg text-secondary">No se pudieron cargar los libros.</p>
+        <button id="books-retry"
+          class="btn btn--secondary font-mono text-label-sm uppercase tracking-wider px-6 py-2 border border-outline-variant rounded hover:bg-surface-container transition-colors">
+          Reintentar
+        </button>
+      </div>
+
+      <!-- Estado: carrusel -->
+      <div id="books-carousel" class="hidden">
+        <div id="carousel-track" class="grid grid-cols-2 md:grid-cols-4 gap-x-gutter gap-y-stack-lg"
+          aria-label="Libros populares">
+          <!-- Se llena dinámicamente con 4 cards a la vez -->
+        </div>
+      </div>
+
+    </section>
+
+    <div class="py-stack-lg border-t border-outline-variant mt-stack-lg"></div>
+  </main>
+  <!-- Footer -->
+  <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
+      <div class="flex flex-col gap-4">
+        <h2 class="font-serif text-headline-lg-mobile text-primary">FERVOR</h2>
+        <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un santuario digital
+          para medios físicos y exploración intelectual curada.</p>
+      </div>
+      <div class="flex flex-wrap gap-x-12 gap-y-4">
+        <div class="flex flex-col gap-2">
+          <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Política de privacidad</a>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Términos del servicio</a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
+      <span class="font-mono text-label-sm uppercase text-secondary">© 2026 FERVOR. TODOS LOS DERECHOS
+        RESERVADOS.</span>
+    </div>
+  </footer>
 
   <script src="/shared/js/utils.js"></script>
   <script src="/js/app.js"></script>

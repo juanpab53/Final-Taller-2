@@ -9,6 +9,9 @@
   }
 
   window.toggleTheme = function () {
+    // Enable color transitions only during the toggle (not on page load)
+    html.classList.add("theme-transitioning");
+
     const isDark = html.getAttribute("data-theme") === "dark";
     if (isDark) {
       html.removeAttribute("data-theme");
@@ -17,5 +20,11 @@
       html.setAttribute("data-theme", "dark");
       localStorage.setItem("bibliotheca-theme", "dark");
     }
+
+    // Remove the class after transitions finish (350ms + small buffer)
+    window.clearTimeout(html._themeTimer);
+    html._themeTimer = window.setTimeout(function () {
+      html.classList.remove("theme-transitioning");
+    }, 400);
   };
 })();
