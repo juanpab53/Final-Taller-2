@@ -1,8 +1,8 @@
 import { ValidationError } from "../../../shared/errors/ValidationError.js";
 import { User } from "../../domain/User.js";
 
-// Caso de uso de registro de usuarios.
-// No sabe nada de Express ni de Prisma; solo usa puertos/inyecciones.
+// User registration use case.
+// It does not know about Express or Prisma; it only uses ports/injections.
 export class RegisterUserUseCase {
 	constructor({ userRepository, passwordHasher }) {
 		this.userRepository = userRepository;

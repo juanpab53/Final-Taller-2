@@ -1,13 +1,13 @@
-// Caso de uso de cierre de sesión.
+// Logout use case.
 export class LogoutUseCase {
 	constructor() {}
 
 	async execute() {
-		// En este diseño stateless no hay estado de sesión en servidor.
-		// El controlador se encarga de limpiar la cookie de refresh.
+		// In this stateless design there is no server-side session state.
+		// The controller is responsible for clearing the refresh token cookie.
 		return {
 			success: true,
-			message: 'Logout ejecutado correctamente.',
+			message: 'Logout successful.',
 		};
 	}
 }

@@ -11,12 +11,12 @@ export class JwtService extends TokenService {
     super();
     this.secret = process.env.JWT_SECRET;
     if (!this.secret) {
-      throw new Error('JWT_SECRET no definido en el entorno');
+      throw new Error('JWT_SECRET not defined in environment');
     }
   }
 
   /**
-   * Firma un access token corto.
+   * Signs a short-lived access token.
    * @param {{ id: string, email: string, role: string }} payload
    * @returns {string}
    */
@@ -27,7 +27,7 @@ export class JwtService extends TokenService {
   }
 
   /**
-   * Firma un refresh token de larga duración.
+   * Signs a long-lived refresh token.
    * @param {{ id: string }} payload
    * @returns {string}
    */
@@ -38,27 +38,27 @@ export class JwtService extends TokenService {
   }
 
   /**
-   * Verifica y decodifica un access token.
+   * Verifies and decodes an access token.
    * @param {string} token
    * @returns {{ id: string, email: string, role: string }}
    */
   verifyAccessToken(token) {
     const payload = jwt.verify(token, this.secret);
     if (payload.type !== ACCESS_TOKEN_TYPE) {
-      throw new Error('Token inválido.');
+      throw new Error('Invalid token.');
     }
     return payload;
   }
 
   /**
-   * Verifica y decodifica un refresh token.
+   * Verifies and decodes a refresh token.
    * @param {string} token
    * @returns {{ id: string }}
    */
   verifyRefreshToken(token) {
     const payload = jwt.verify(token, this.secret);
     if (payload.type !== REFRESH_TOKEN_TYPE) {
-      throw new Error('Refresh token inválido.');
+      throw new Error('Invalid refresh token.');
     }
     return payload;
   }

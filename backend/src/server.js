@@ -6,8 +6,8 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { errorHandler } from "./shared/middleware/errorHandler.js";
 import { NotFoundError } from "./shared/errors/NotFoundError.js";
-import { createAuthMiddleware } from "./shared/infrastructure/authMiddleware.js";
-import { requireRole } from "./shared/infrastructure/requireRole.js";
+import { createAuthMiddleware } from "./auth/infrastructure/authMiddleware.js";
+import { requireRole } from "./auth/infrastructure/requireRole.js";
 import { BcryptHasher } from "./shared/infrastructure/BcryptHasher.js";
 import { JwtService } from "./auth/infrastructure/JwtService.js";
 import { PrismaUserRepository } from "./user/infrastructure/PrismaUserRepository.js";
@@ -43,7 +43,7 @@ const authMiddleware = createAuthMiddleware(tokenService);
 
 const registerUserUseCase = new RegisterUserUseCase({ userRepository, passwordHasher });
 const getUserProfileUseCase = new GetUserProfileUseCase({ userRepository });
-const loginUseCase = new LoginUseCase({ userRepository, credentialRepository, passwordHasher, tokenService });
+const loginUseCase = new LoginUseCase({ credentialRepository, passwordHasher, tokenService });
 const refreshTokenUseCase = new RefreshTokenUseCase({ tokenService, userRepository });
 const logoutUseCase = new LogoutUseCase();
 

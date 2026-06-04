@@ -40,7 +40,7 @@ export class AuthController {
     try {
       const refreshToken = req.cookies?.[REFRESH_COOKIE_NAME];
       if (!refreshToken) {
-        throw new UnauthorizedError('Refresh token no proporcionado.');
+        throw new UnauthorizedError('Refresh token not provided.');
       }
 
       const result = await this.refreshTokenUseCase.execute({ refreshToken });
@@ -77,7 +77,7 @@ export class AuthController {
       res.json({
         success: true,
         data: {
-          message: 'Sesión finalizada correctamente.',
+          message: 'Logout successful.',
         },
       });
     } catch (err) {

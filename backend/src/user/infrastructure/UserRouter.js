@@ -3,7 +3,7 @@ import { Router } from 'express';
 export function createUserRouter({ userController, authMiddleware, requireRole }) {
   const router = Router();
 
-  // Registro de usuario público
+  // Public user registration endpoint.
   router.post('/register', async (req, res, next) => {
     try {
       await userController.register(req, res, next);
@@ -12,7 +12,7 @@ export function createUserRouter({ userController, authMiddleware, requireRole }
     }
   });
 
-  // Perfil protegido; requiere token válido
+  // Protected profile endpoint; requires a valid token.
   router.get('/profile', authMiddleware, requireRole('CLIENT', 'ADMIN'), async (req, res, next) => {
     try {
       await userController.getProfile(req, res, next);

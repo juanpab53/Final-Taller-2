@@ -1,32 +1,30 @@
 import { UnauthorizedError } from "../../../shared/errors/UnauthorizedError.js";
 
-// Caso de uso de login. Localiza el usuario, valida credenciales y genera tokens.
+/**
+ * Login use case.
+ * Finds the user by email and validates credentials in a single call.
+ */
 export class LoginUseCase {
-	constructor({ userRepository, credentialRepository, passwordHasher, tokenService }) {
-		this.userRepository = userRepository;
+	constructor({ credentialRepository, passwordHasher, tokenService }) {
 		this.credentialRepository = credentialRepository;
 		this.passwordHasher = passwordHasher;
 		this.tokenService = tokenService;
 	}
 
 	/**
-	 * Ejecuta el flujo de login.
+	 * Executes the login flow.
 	 * @param {{ email: string, password: string }} data
 	 */
 	async execute({ email, password }) {
-		const user = await this.userRepository.findByEmail(email);
-		if (!user) {
-			throw new UnauthorizedError('Credenciales inválidas');
+		const authData = await this.credentialRepository.findByEmailWithCredentials(email);
+		if (!authData || !authData.user || !authData.credential) {
+			throw new UnauthorizedError('Invalid credentials.');
 		}
 
-		const cred = await this.credentialRepository.findByUserId(user.id);
-		if (!cred) {
-			throw new UnauthorizedError('Credenciales inválidas');
-		}
-
-		const ok = await this.passwordHasher.compare(password, cred.getPasswordHash());
+		const { user, credential } = authData;
+		const ok = await this.passwordHasher.compare(password, credential.getPasswordHash());
 		if (!ok) {
-			throw new UnauthorizedError('Credenciales inválidas');
+			throw new UnauthorizedError('Invalid credentials.');
 		}
 
 		const accessToken = this.tokenService.signAccessToken({ id: user.id, email: user.email, role: user.role });

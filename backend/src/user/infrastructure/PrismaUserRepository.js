@@ -6,12 +6,12 @@ export class PrismaUserRepository {
   async save(user) {
     try {
       const created = await prisma.user.create({
-        data: user.toPrisma(),
+        data: this._mapUserToPrisma(user),
       });
       return this._mapRowToUser(created);
     } catch (err) {
       if (err?.code === 'P2002') {
-        throw new ValidationError('Email ya registrado.');
+        throw new ValidationError('Email already registered.');
       }
       throw err;
     }
@@ -29,6 +29,16 @@ export class PrismaUserRepository {
       where: { email },
     });
     return this._mapRowToUser(row);
+  }
+
+  _mapUserToPrisma(user) {
+    return {
+      name: user.name,
+      email: user.email,
+      tel: user.tel,
+      password_hash: user.passwordHash,
+      role: user.role,
+    };
   }
 
   _mapRowToUser(row) {

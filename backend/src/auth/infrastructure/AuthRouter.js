@@ -3,7 +3,7 @@ import { Router } from 'express';
 export function createAuthRouter({ authController }) {
   const router = Router();
 
-  // Login público: recibe email y password
+  // Public login endpoint: receives email and password.
   router.post('/login', async (req, res, next) => {
     try {
       await authController.login(req, res, next);
@@ -12,7 +12,7 @@ export function createAuthRouter({ authController }) {
     }
   });
 
-  // Refresca el token usando refresh token enviado por cookie httpOnly.
+  // Refresh the access token using the httpOnly refresh token cookie.
   router.post('/refresh', async (req, res, next) => {
     try {
       await authController.refresh(req, res, next);
@@ -21,7 +21,7 @@ export function createAuthRouter({ authController }) {
     }
   });
 
-  // Cierra sesión borrando el refresh token en cookie.
+  // Logout endpoint: clears the refresh token cookie.
   router.post('/logout', async (req, res, next) => {
     try {
       await authController.logout(req, res, next);

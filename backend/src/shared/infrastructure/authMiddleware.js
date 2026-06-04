@@ -1,6 +1,6 @@
 import { UnauthorizedError } from '../errors/UnauthorizedError.js';
 
-// Crea un middleware que valida el access token usando el TokenService inyectado.
+// Creates middleware that validates the access token using the injected TokenService.
 export function createAuthMiddleware(tokenService) {
 	return (req, res, next) => {
 		try {
@@ -8,12 +8,12 @@ export function createAuthMiddleware(tokenService) {
 			const token = authHeader?.split(' ')[1];
 
 			if (!token) {
-				throw new UnauthorizedError('Token no proporcionado.');
+				throw new UnauthorizedError('Token not provided.');
 			}
 
 			const payload = tokenService.verifyAccessToken(token);
 
-			// Contrato simple para downstream: id, email, role.
+			// Simple contract for downstream: id, email, role.
 			req.user = {
 				id: payload.id,
 				email: payload.email,
@@ -22,7 +22,15 @@ export function createAuthMiddleware(tokenService) {
 
 			next();
 		} catch (err) {
-			next(new UnauthorizedError('Token inválido o expirado.'));
+			if (
+				err instanceof UnauthorizedError ||
+				err.name === 'JsonWebTokenError' ||
+				err.name === 'TokenExpiredError'
+			) {
+				return next(new UnauthorizedError('Invalid or expired token.'));
+			}
+
+			next(err);
 		}
 	};
 }

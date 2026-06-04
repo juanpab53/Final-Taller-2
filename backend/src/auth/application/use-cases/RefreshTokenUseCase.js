@@ -8,19 +8,19 @@ export class RefreshTokenUseCase {
 
   async execute({ refreshToken }) {
     if (!refreshToken) {
-      throw new UnauthorizedError('Refresh token no proporcionado.');
+      throw new UnauthorizedError('Refresh token not provided.');
     }
 
     let payload;
     try {
       payload = this.tokenService.verifyRefreshToken(refreshToken);
     } catch (err) {
-      throw new UnauthorizedError('Refresh token inválido o expirado.');
+      throw new UnauthorizedError('Refresh token invalid or expired.');
     }
 
     const user = await this.userRepository.findById(payload.id);
     if (!user) {
-      throw new UnauthorizedError('Usuario no encontrado para refresh token.');
+      throw new UnauthorizedError('User not found for refresh token.');
     }
 
     const accessToken = this.tokenService.signAccessToken({

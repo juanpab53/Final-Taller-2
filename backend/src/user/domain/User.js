@@ -3,7 +3,7 @@ import { Email } from "./Email.js";
 export class User {
   constructor({ id, name = "", email, tel = "", role = "CLIENT", passwordHash }) {
     if (!email) {
-      throw new Error("Email es requerido para crear un usuario.");
+      throw new Error("Email is required to create a user.");
     }
 
     this.id = id;
@@ -16,16 +16,6 @@ export class User {
 
   static create({ name, email, tel, role = "CLIENT", passwordHash }) {
     return new User({ name, email, tel, role, passwordHash });
-  }
-
-  toPrisma() {
-    return {
-      name: this.name,
-      email: this.email,
-      tel: this.tel,
-      password_hash: this.passwordHash,
-      role: this.role,
-    };
   }
 
   toPublic() {
