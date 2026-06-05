@@ -25,7 +25,7 @@ export function errorHandler(err, _req, res, _next) {
     success: false,
     error: {
       code: "INTERNAL_SERVER_ERROR",
-      message: "Error interno del servidor",
+      message: "Internal server error",
     },
   };
 
