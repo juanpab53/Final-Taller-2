@@ -1,7 +1,6 @@
-import { UnauthorizedError } from '../errors/UnauthorizedError.js';
-import { ForbiddenError } from '../errors/ForbiddenError.js';
+import { UnauthorizedError } from '../../shared/errors/UnauthorizedError.js';
+import { ForbiddenError } from '../../shared/errors/ForbiddenError.js';
 
-// Role authorization middleware. Requires authMiddleware to have populated req.user.
 export function requireRole(...roles) {
 	return (req, res, next) => {
 		if (!req.user) {
