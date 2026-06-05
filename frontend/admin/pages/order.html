@@ -42,10 +42,13 @@
     <header class="admin-topbar">
       <span class="admin-topbar__logo">FERVOR</span>
       <div class="admin-topbar__right">
-        <a href="../../public/pages/login.html" class="admin-topbar__icon-btn" title="Cerrar sesión">
-          <span class="material-symbols-outlined">logout</span>
-        </a>
-      </div>
+        <div class="flex items-center gap-4" style="display: flex; align-items: center; gap: 1rem;">
+            <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
+              title="Cambiar tema"></button>
+            <a href="../public/pages/login.html" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+          </div>
     </header>
 
     <div class="admin-content">
