@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
-// Mantener una sola instancia de Prisma en desarrollo para evitar fugas de conexiones aunque el módulo se recargue varias veces.
+// Keep a single Prisma instance in development to avoid connection leaks
+// when the module reloads.
 const globalForPrisma = globalThis;
 
 export const prisma =

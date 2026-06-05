@@ -5,7 +5,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export class Email {
   constructor(value) {
     if (!value || typeof value !== "string" || !EMAIL_PATTERN.test(value.trim())) {
-      throw new ValidationError("Email inválido.");
+      throw new ValidationError("Invalid email.");
     }
 
     this.value = value.trim().toLowerCase();

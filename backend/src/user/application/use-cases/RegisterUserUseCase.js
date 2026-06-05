@@ -10,12 +10,12 @@ export class RegisterUserUseCase {
 	}
 
 	/**
-	 * Ejecuta el registro de un usuario.
+	 * Executes user registration.
 	 * @param {{ email: string, password: string, name?: string, tel?: string }} data
 	 */
 	async execute({ email, password, name, tel }) {
 		if (!email || !password) {
-			throw new ValidationError('Email y password son requeridos.');
+			throw new ValidationError('Email and password are required.');
 		}
 
 		const passwordHash = await this.passwordHasher.hash(password);

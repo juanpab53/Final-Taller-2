@@ -69,16 +69,16 @@ app.use("/shared", express.static(sharedPath));
 app.use("/", express.static(publicPath));
 
 app.use((req, res, next) => {
-  next(new NotFoundError('Ruta no encontrada.'));
+  next(new NotFoundError('Route not found.'));
 });
 
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`Frontend público: http://localhost:${PORT}`);
-  console.log(`Panel admin:      http://localhost:${PORT}/admin`);
-  console.log(`Recursos compartidos: http://localhost:${PORT}/shared`);
+  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Public frontend:  http://localhost:${PORT}`);
+  console.log(`Admin panel:      http://localhost:${PORT}/admin`);
+  console.log(`Shared resources: http://localhost:${PORT}/shared`);
   console.log(`API health:       http://localhost:${PORT}/api/health`);
   console.log(`Auth router:      http://localhost:${PORT}/api/auth`);
   console.log(`User router:      http://localhost:${PORT}/api/users`);

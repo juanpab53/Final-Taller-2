@@ -1,5 +1,5 @@
 // Port interface for token generation and verification.
-// Implementaciones concretas deben exponer los métodos de token usados por la aplicación.
+// Concrete implementations must expose the token methods used by the application.
 export class TokenService {
   signAccessToken(payload) {
     throw new Error("TokenService.signAccessToken must be implemented.");
