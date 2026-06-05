@@ -29,16 +29,16 @@ módulo/
 
 ### Módulos
 
-| Módulo       | Propósito                                |
-|--------------|------------------------------------------|
+| Módulo        | Propósito                                 |
+| -------------- | ------------------------------------------ |
 | `auth`       | Autenticación y autorización (JWT)       |
-| `authors`    | Gestión de autores                       |
-| `books`      | Catálogo de libros                       |
-| `cart`       | Carrito de compras                       |
-| `categories` | Categorías de libros                     |
-| `orders`     | Pedidos y checkout                       |
-| `payments`   | Procesamiento de pagos                   |
-| `users`      | Gestión de usuarios                      |
+| `authors`    | Gestión de autores                        |
+| `books`      | Catálogo de libros                        |
+| `cart`       | Carrito de compras                         |
+| `categories` | Categorías de libros                      |
+| `orders`     | Pedidos y checkout                         |
+| `payments`   | Procesamiento de pagos                     |
+| `users`      | Gestión de usuarios                       |
 | `shared`     | Configuración, errores, middleware común |
 
 ## Frontend
