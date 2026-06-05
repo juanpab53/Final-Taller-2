@@ -220,10 +220,9 @@
   border: 1px solid var(--color-surface-container-high);
   border-radius: var(--radius-xl);
   padding: var(--space-stack-md);
-  height: 8rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 .stat-card__label {
@@ -391,6 +390,50 @@
 
 .pagination__btn:hover { background-color: var(--color-surface-container); }
 
+/* ── Orders Filter Bar ────────────────────────────────────── */
+.orders-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.orders-filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-outline-variant);
+  background-color: transparent;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.orders-filter-btn:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+  border-color: var(--color-outline);
+}
+
+/* Estado activo — usa el color primario del panel */
+.orders-filter-btn.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary, #fff);
+  border-color: var(--color-primary);
+}
+
+/* Variantes cromáticas opcionales por estado (para hover cuando está activo) */
+.orders-filter-btn[data-filter="pending"].is-active     { background-color: var(--color-secondary-container); color: var(--color-primary); border-color: var(--color-secondary-container); }
+.orders-filter-btn[data-filter="processing"].is-active  { background-color: #2d4a6e; color: #c9d8f0; border-color: #2d4a6e; }
+.orders-filter-btn[data-filter="shipped"].is-active     { background-color: #1e4d38; color: #a7d9be; border-color: #1e4d38; }
+.orders-filter-btn[data-filter="delivered"].is-active   { background-color: #1a3d28; color: #6fcf97; border-color: #1a3d28; }
+.orders-filter-btn[data-filter="cancelled"].is-active   { background-color: var(--color-error-container); color: var(--color-error); border-color: var(--color-error-container); }
+
 /* ── Admin Footer ─────────────────────────────────────────── */
 .admin-footer {
   background-color: var(--color-background);
@@ -440,3 +483,89 @@
   text-transform: uppercase;
   color: var(--color-secondary);
 }
+
+/* ── Stats Grid — 4 columns ──────────────────────────── */
+.stats-grid--2 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .stats-grid--2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Enhanced Stat Card ──────────────────────────────── */
+.stat-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card__icon {
+  font-size: 18px;
+  color: var(--color-primary);
+}
+
+.stat-card__body {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.stat-card__error-msg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-error);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card__trend {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.stat-card__trend--up {
+  color: #1e4d38;
+  background-color: #d4edda;
+}
+
+.stat-card__trend--down {
+  color: #93000a;
+  background-color: #ffdad6;
+}
+
+[data-theme="dark"] .stat-card__trend--up {
+  color: #6fcf97;
+  background-color: #1a3d28;
+}
+
+[data-theme="dark"] .stat-card__trend--down {
+  color: #ffb4ab;
+  background-color: #733b3b;
+}
+
+/* ── Skeleton Loading ────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.skeleton {
+  background-color: var(--color-surface-container-high);
+  border-radius: var(--radius-md);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.skeleton--display {
+  height: 40px;
+}
+
+.skeleton--w-16 { width: 4rem; }
+.skeleton--w-24 { width: 6rem; }
+.skeleton--w-36 { width: 9rem; }
