@@ -1,6 +1,5 @@
-import { UnauthorizedError } from '../errors/UnauthorizedError.js';
+import { UnauthorizedError } from '../../shared/errors/UnauthorizedError.js';
 
-// Creates middleware that validates the access token using the injected TokenService.
 export function createAuthMiddleware(tokenService) {
 	return (req, res, next) => {
 		try {
@@ -13,7 +12,6 @@ export function createAuthMiddleware(tokenService) {
 
 			const payload = tokenService.verifyAccessToken(token);
 
-			// Simple contract for downstream: id, email, role.
 			req.user = {
 				id: payload.id,
 				email: payload.email,
