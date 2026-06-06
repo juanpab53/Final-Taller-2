@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FERVOR — Santuario Digital de Literatura</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/landing.css" />
+</head>
+
+<body class="bg-background text-on-background font-sans">
+  <!-- Header -->
+  <header
+    class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
+    <div class="flex items-center gap-8">
+      <a href="landing.html"
+        class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary no-underline">
+        FERVOR</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()"
+        class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
+        title="Cambiar tema"></button>
+      <a href="login.html"
+        class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+    <!-- Hero Section -->
+    <section class="py-stack-lg min-h-[80vh] flex flex-col justify-center border-b border-outline-variant">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-x-gutter gap-y-12 items-center">
+        <!-- Text Column -->
+        <div class="md:col-span-7 flex flex-col items-start text-left animate-fade-in-up">
+          <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">[ BIENVENIDO A
+            FERVOR ]</span>
+          <h2 class="font-serif text-[42px] md:text-display-title text-primary mt-unit mb-stack-md leading-tight">
+            La belleza de la literatura impresa.
+          </h2>
+          <p class="font-sans text-body-lg text-secondary max-w-xl mb-stack-lg">
+            Fervor es una curaduría de clásicos contemporáneos y ediciones físicas selectas. Un santuario digital
+            diseñado para quienes encuentran refugio en la pause del papel, el aroma de la tinta y la evolución del
+            pensamiento crítico.
+          </p>
+          <div class="flex flex-wrap gap-4 w-full sm:w-auto">
+            <a href="catalogo.html" class="btn btn--primary px-8 py-4">Explorar Catálogo</a>
+            <a href="#manifiesto" class="btn btn--outline px-8 py-4">Nuestra Filosofía</a>
+          </div>
+        </div>
+
+        <!-- 3D Book Visual Column -->
+        <div class="md:col-span-5 flex justify-center items-center animate-fade-in-up delay-200">
+          <div class="book-3d-container">
+            <div class="book-3d">
+              <div class="book-3d__cover">
+                <img src="../assets/fervor_hero_book.png" alt="El Archivo Moderno - Curaduría Fervor" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centered Scroll Indicator -->
+      <div class="text-center w-full animate-fade-in-up delay-300">
+        <a href="#manifiesto" class="scroll-indicator no-underline" aria-label="Desplazarse hacia abajo">
+          <span class="material-symbols-outlined" style="font-size: 32px;">expand_more</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Manifesto / Philosophy Section -->
+    <section id="manifiesto" class="py-stack-lg border-b border-outline-variant scroll-mt-20">
+      <div class="text-center mb-stack-lg">
+        <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">[ NUESTRO
+          MANIFIESTO ]</span>
+      </div>
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <h3 class="manifesto-quote text-primary italic font-normal">
+          "Un libro físico no es un objeto estático. Es una arquitectura de papel, una conversación que atraviesa los
+          siglos y una extensión material de nuestras ideas."
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-12">
+        <div>
+          <img src="../assets/fervor_editorial_space.png" alt="Espacio de lectura minimalista de Fervor"
+            class="rounded-xl border border-outline-variant shadow-sm max-w-[400px] object-cover h-[200px]" />
+        </div>
+        <div class="flex flex-col gap-6">
+          <h4 class="font-serif text-[28px] text-primary">El peso del papel en un mundo efímero</h4>
+          <p class="font-sans text-body-md text-secondary">
+            En un entorno saturado de estímulos digitales instantáneos, Fervor nace como una declaración de pausa.
+            Creemos en la experiencia táctil, en el ritmo pausado de la lectura analógica y en el valor de coleccionar
+            libros como quien construye un mapa de su mente.
+          </p>
+          <p class="font-sans text-body-md text-secondary">
+            Cada título de nuestro catálogo pasa por un riguroso proceso de selección. No buscamos la acumulación
+            masiva; preferimos la curaduría selectiva, las traducciones cuidadas y las encuadernaciones que merecen ser
+            heredadas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spotlight Section -->
+    <section class="py-stack-lg border-b border-outline-variant">
+      <div class="text-center mb-stack-lg">
+        <span class="font-mono text-label-sm text-secondary mb-unit block uppercase tracking-widest">[ EDICIÓN DE
+          DESTACADA ]</span>
+      </div>
+
+      <div class="spotlight-dark-panel mt-8">
+        <!-- Left: Book Display -->
+        <div class="flex justify-center">
+          <div
+            class="w-[200px] md:w-[240px] aspect-[3/4] rounded-lg overflow-hidden border border-outline-variant shadow-md">
+            <img src="https://picsum.photos/seed/ficciones/300/400" alt="Ficciones de Jorge Luis Borges"
+              class="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <!-- Right: Book Details -->
+        <div class="flex flex-col items-start gap-4">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-outline-variant">Recomendación
+            Editorial</span>
+          <h4 class="font-serif text-[32px] leading-tight">Ficciones</h4>
+          <p class="font-sans text-body-md italic text-outline-variant" style="margin-top: -0.5rem;">Jorge Luis Borges
+          </p>
+          <p class="font-sans text-body-md text-outline-variant">
+            El laberinto borgeano definitivo en una de las ediciones más cuidadas de la lengua española. Un volumen
+            indispensable que reúne los cuentos más emblemáticos del autor de "El Aleph", presentados en tapa dura
+            forrada en tela de lino.
+          </p>
+          <div class="flex items-baseline gap-4 mt-2">
+            <span class="font-mono text-headline-md">$18.00</span>
+          </div>
+          <div class="flex gap-4 mt-4 w-full sm:w-auto">
+            <a href="book-detail.html?id=2" class="btn btn--outline px-6 py-2 sm:w-auto">Ver Detalles</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
+      <div class="flex flex-col gap-4">
+        <h2 class="font-serif text-headline-lg-mobile text-primary">FERVOR</h2>
+        <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un santuario digital para
+          los libros físicos y la exploración intelectual.</p>
+      </div>
+      <div class="flex flex-wrap gap-x-12 gap-y-4">
+        <div class="flex flex-col gap-2">
+          <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Política de privacidad</a>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Términos del servicio</a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
+      <span class="font-mono text-label-sm uppercase text-secondary">© 2026 FERVOR. TODOS LOS DERECHOS
+        RESERVADOS.</span>
+    </div>
+  </footer>
+
+  <script src="../../shared/js/utils.js"></script>
+</body>
+
+</html>

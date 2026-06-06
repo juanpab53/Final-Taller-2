@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FERVOR — Pedidos</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="/shared/css/styles.css">
+</head>
+<body>
+<div class="admin-shell">
+
+  <!-- Sidebar -->
+    <aside class="sidenav">
+      <div class="sidenav__header">
+        <h1 class="sidenav__title">FERVOR</h1>
+        <p class="sidenav__subtitle">Panel de administración</p>
+      </div>
+      <nav class="sidenav__nav">
+        <a class="sidenav__link " href="../index.html">
+          <span class="material-symbols-outlined">dashboard</span>
+          Estadísticas
+        </a>
+        <a class="sidenav__link" href="inventory.html">
+          <span class="material-symbols-outlined">auto_stories</span>
+          Inventario
+        </a>
+        <a class="sidenav__link is-active" href="order.html">
+          <span class="material-symbols-outlined">receipt_long</span>
+          Pedidos
+        </a>
+      </nav>
+      <div class="sidenav__footer">
+        <p class="sidenav__footer-brand">FERVOR</p>
+        <p class="sidenav__footer-version">Panel de administración</p>
+      </div>
+    </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <header class="admin-topbar">
+      <span class="admin-topbar__logo">FERVOR</span>
+      <div class="admin-topbar__right">
+        <div class="flex items-center gap-4" style="display: flex; align-items: center; gap: 1rem;">
+            <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
+              title="Cambiar tema"></button>
+            <a href="../public/pages/login.html" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+          </div>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- Section header -->
+      <section class="admin-section-header">
+        <div>
+          <h2 class="admin-section-header__title">Pedidos</h2>
+        </div>
+        <div class="admin-section-header__actions">
+          <button class="btn btn--outline" id="exportOrdersBtn">
+            <span class="material-symbols-outlined" style="font-size:14px">download</span>
+            Exportar CSV
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter bar -->
+      <div class="orders-filters">
+        <button class="orders-filter-btn is-active" data-filter="all">Todos</button>
+        <button class="orders-filter-btn" data-filter="pending">Pendiente</button>
+        <button class="orders-filter-btn" data-filter="processing">En proceso</button>
+        <button class="orders-filter-btn" data-filter="shipped">Enviado</button>
+        <button class="orders-filter-btn" data-filter="delivered">Entregado</button>
+        <button class="orders-filter-btn" data-filter="cancelled">Cancelado</button>
+      </div>
+
+      <!--
+        Shape esperado del backend por pedido:
+        {
+          id:         string | number,
+          customer:   { name: string, email: string },
+          items:      number,          // cantidad de libros
+          total:      number,          // valor en pesos/dólares
+          status:     "pending" | "processing" | "shipped" | "delivered" | "cancelled",
+          created_at: string (ISO 8601),
+        }
+        Endpoint → admin/js/orders.js → constante API_BASE
+      -->
+      <section class="inventory-table-wrap">
+        <table class="inventory-table orders-table">
+          <thead>
+            <tr>
+              <th>Pedido</th>
+              <th>Cliente</th>
+              <th>Ítems</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th class="align-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTbody">
+            <!-- orders.js: skeleton → data | empty | error -->
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+
+    <footer class="admin-footer">
+      <span class="admin-footer__logo">FERVOR</span>
+      <div class="admin-footer__links">
+        <a class="admin-footer__link" href="#">Política de privacidad</a>
+        <a class="admin-footer__link" href="#">Términos del servicio</a>
+      </div>
+      <span class="admin-footer__copy">© 2026 FERVOR. Todos los derechos reservados.</span>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../../shared/js/data.js"></script>
+<script src="../js/orders.js"></script>
+</body>
+</html>

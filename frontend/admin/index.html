@@ -1,17 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BookStore - Admin</title>
+  <title>FERVOR — Estadísticas</title>
   <link rel="stylesheet" href="/shared/css/styles.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-  <h1>Panel de Administración</h1>
-  <p>Gestión de libros, autores, categorías y pedidos</p>
+  <div class="admin-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidenav">
+      <div class="sidenav__header">
+        <h1 class="sidenav__title">FERVOR</h1>
+        <p class="sidenav__subtitle">Panel de administración</p>
+      </div>
+      <nav class="sidenav__nav">
+        <a class="sidenav__link is-active" href="index.html">
+          <span class="material-symbols-outlined">dashboard</span>
+          Estadisticas
+        </a>
+        <a class="sidenav__link" href="pages/inventory.html">
+          <span class="material-symbols-outlined">auto_stories</span>
+          Inventario
+        </a>
+        <a class="sidenav__link" href="pages/order.html">
+          <span class="material-symbols-outlined">receipt_long</span>
+          Pedidos
+        </a>
+      </nav>
+      <div class="sidenav__footer">
+        <p class="sidenav__footer-brand">FERVOR</p>
+        <p class="sidenav__footer-version">Panel de administración</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <span class="admin-topbar__logo">FERVOR</span>
+        <div class="admin-topbar__right">
+          <div class="flex items-center gap-4" style="display: flex; align-items: center; gap: 1rem;">
+            <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
+              title="Cambiar tema"></button>
+            <a href="../../public/pages/login.html" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+
+        <!-- Section Header -->
+        <section class="admin-section-header">
+          <div>
+            <h2 class="admin-section-header__title">Estadísticas</h2>
+            <p class="admin-section-header__path">Panel de administración / Estadísticas</p>
+          </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid stats-grid--2">
+
+          <!-- Tasa de cancelación -->
+          <article class="stat-card">
+            <div class="stat-card__header">
+              <span class="material-symbols-outlined stat-card__icon">cancel</span>
+              <span class="stat-card__label">Tasa de cancelación</span>
+            </div>
+            <div class="stat-card__body" id="cancellation-loading">
+              <div class="skeleton skeleton--display skeleton--w-24"></div>
+            </div>
+            <div class="stat-card__body hidden" id="cancellation-error">
+              <span class="stat-card__value stat-card__value--error">—</span>
+              <span class="stat-card__error-msg">Error al cargar</span>
+            </div>
+            <div class="stat-card__body hidden" id="cancellation-data">
+              <span class="stat-card__value" id="cancellation-value">0%</span>
+              <span class="stat-card__trend stat-card__trend--down">-2.3%</span>
+            </div>
+          </article>
+
+          <!-- Ingresos diarios -->
+          <article class="stat-card">
+            <div class="stat-card__header">
+              <span class="material-symbols-outlined stat-card__icon">today</span>
+              <span class="stat-card__label">Ingresos diarios</span>
+            </div>
+            <div class="stat-card__body" id="daily-loading">
+              <div class="skeleton skeleton--display skeleton--w-36"></div>
+            </div>
+            <div class="stat-card__body hidden" id="daily-error">
+              <span class="stat-card__value stat-card__value--error">—</span>
+              <span class="stat-card__error-msg">Error al cargar</span>
+            </div>
+            <div class="stat-card__body hidden" id="daily-data">
+              <span class="stat-card__value" id="daily-value">$0</span>
+            </div>
+          </article>
+
+          <!-- Ingresos mensuales -->
+          <article class="stat-card">
+            <div class="stat-card__header">
+              <span class="material-symbols-outlined stat-card__icon">calendar_month</span>
+              <span class="stat-card__label">Ingresos mensuales</span>
+            </div>
+            <div class="stat-card__body" id="monthly-loading">
+              <div class="skeleton skeleton--display skeleton--w-36"></div>
+            </div>
+            <div class="stat-card__body hidden" id="monthly-error">
+              <span class="stat-card__value stat-card__value--error">—</span>
+              <span class="stat-card__error-msg">Error al cargar</span>
+            </div>
+            <div class="stat-card__body hidden" id="monthly-data">
+              <span class="stat-card__value" id="monthly-value">$0</span>
+            </div>
+          </article>
+
+          <!-- Stock bajo -->
+          <article class="stat-card">
+            <div class="stat-card__header">
+              <span class="material-symbols-outlined stat-card__icon">inventory_2</span>
+              <span class="stat-card__label">Stock bajo</span>
+            </div>
+            <div class="stat-card__body" id="lowstock-loading">
+              <div class="skeleton skeleton--display skeleton--w-16"></div>
+            </div>
+            <div class="stat-card__body hidden" id="lowstock-error">
+              <span class="stat-card__value stat-card__value--error">—</span>
+              <span class="stat-card__error-msg">Error al cargar</span>
+            </div>
+            <div class="stat-card__body hidden" id="lowstock-data">
+              <span class="stat-card__value" id="lowstock-value">0</span>
+              <span class="stat-card__trend stat-card__trend--up">+3</span>
+            </div>
+          </article>
+
+        </section>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="admin-footer">
+        <span class="admin-footer__logo">FERVOR</span>
+        <div class="admin-footer__links">
+          <a class="admin-footer__link" href="#">Política de privacidad</a>
+          <a class="admin-footer__link" href="#">Términos del servicio</a>
+        </div>
+        <span class="admin-footer__copy">© 2026 FERVOR. TODOS LOS DERECHOS RESERVADOS.</span>
+      </footer>
+
+    </main>
+  </div>
 
   <script src="/shared/js/utils.js"></script>
-  <script src="js/app.js"></script>
 </body>
+
 </html>

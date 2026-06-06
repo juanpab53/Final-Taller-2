@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FERVOR - Crear cuenta</title>
+  <link rel="stylesheet" href="/shared/css/styles.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body class="bg-background text-on-background font-sans">
+  <header
+    class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-outline-variant">
+    <div class="flex items-center gap-8">
+      <a href="../index.html"
+        class="font-serif text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary no-underline">
+        FERVOR</a>
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+          href="catalogo.html">Catálogo</a>
+        <a class="font-sans text-button-text uppercase tracking-wider text-secondary hover:text-primary transition-colors duration-200"
+          href="landing.html">Nosotros</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()"
+        class="theme-toggle material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200"
+        title="Cambiar tema"></button>
+      <a href="login.html"
+        class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">person</a>
+      <a href="cart.html"
+        class="material-symbols-outlined text-primary p-2 transition-all duration-300 hover:bg-surface-container rounded-full no-underline">shopping_cart</a>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="auth-card">
+      <h1 class="auth-card__title">Crear cuenta</h1>
+      <p class="auth-card__subtitle">Únete a FERVOR para empezar a construir tu colección personal.</p>
+
+      <!-- Error message (hidden by default) -->
+      <div class="auth-error hidden" data-state="error">
+        <span class="material-symbols-outlined" style="font-size: 16px;">error</span>
+        <span>Este correo ya está registrado.</span>
+      </div>
+
+      <form class="auth-form" id="register-form" novalidate>
+        <div class="auth-form__field">
+          <label class="auth-form__label" for="reg-name">Nombre completo</label>
+          <input id="reg-name" class="auth-form__input" type="text" placeholder="Juan Pérez" autocomplete="name"
+            required />
+          <span class="auth-form__field-error hidden" id="reg-name-error"></span>
+        </div>
+        <div class="auth-form__field">
+          <label class="auth-form__label" for="reg-email">Correo electrónico</label>
+          <input id="reg-email" class="auth-form__input" type="email" placeholder="tucorreo@email.com"
+            autocomplete="email" required />
+          <span class="auth-form__field-error hidden" id="reg-email-error"></span>
+        </div>
+        <div class="auth-form__field">
+          <label class="auth-form__label" for="reg-phone">Teléfono</label>
+          <input id="reg-phone" class="auth-form__input" type="tel" placeholder="314-567-8901" autocomplete="tel"
+            required />
+          <span class="auth-form__field-error hidden" id="reg-phone-error"></span>
+        </div>
+        <div class="auth-form__field">
+          <label class="auth-form__label" for="reg-password">Contraseña</label>
+          <input id="reg-password" class="auth-form__input" type="password" placeholder="Crea una contraseña segura"
+            autocomplete="new-password" required />
+          <span class="auth-form__field-error hidden" id="reg-password-error"></span>
+        </div>
+        <div class="auth-form__field">
+          <label class="auth-form__label" for="reg-confirm">Confirmar contraseña</label>
+          <input id="reg-confirm" class="auth-form__input" type="password" placeholder="Repite tu contraseña"
+            autocomplete="new-password" required />
+          <span class="auth-form__field-error hidden" id="reg-confirm-error"></span>
+        </div>
+        <div class="auth-form__actions">
+          <button id="register-submit" class="btn btn--primary btn--full" type="submit">Crear cuenta</button>
+        </div>
+      </form>
+
+      <p class="auth-form__footer">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+      </p>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="w-full mt-stack-lg border-t border-outline-variant bg-surface-container-low">
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:items-center w-full px-margin-mobile md:px-margin-desktop py-stack-md gap-8">
+      <div class="flex flex-col gap-4">
+        <h2 class="font-serif text-headline-lg-mobile text-primary">FERVOR</h2>
+        <p class="font-mono text-label-sm uppercase tracking-widest text-secondary max-w-xs">Un santuario digital
+          para medios físicos y exploración intelectual curada.</p>
+      </div>
+      <div class="flex flex-wrap gap-x-12 gap-y-4">
+        <div class="flex flex-col gap-2">
+          <span class="font-mono text-label-sm text-primary font-bold mb-1">LEGAL</span>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Política de privacidad</a>
+          <a class="font-mono text-label-sm uppercase text-secondary hover:text-primary underline transition-all duration-300"
+            href="#">Términos del servicio</a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant flex justify-between items-center">
+      <span class="font-mono text-label-sm uppercase text-secondary">© 2026 FERVOR. TODOS LOS DERECHOS
+        RESERVADOS.</span>
+    </div>
+  </footer>
+
+  <script src="../../shared/js/utils.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+
+</html>

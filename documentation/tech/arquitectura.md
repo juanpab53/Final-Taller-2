@@ -57,10 +57,10 @@ Express sirve tanto la API como los archivos estáticos del frontend, eliminando
 
 ## Tecnologías
 
-| Capa        | Tecnología                     |
-| ----------- | ------------------------------- |
-| Backend     | Node.js + Express 5             |
-| ORM         | Prisma 7                        |
-| BD          | PostgreSQL                      |
-| Frontend    | HTML5, CSS3, JavaScript vanilla |
-| Paquetería | pnpm                            |
+| Capa         | Tecnología                          |
+|--------------|-------------------------------------|
+| Backend      | Node.js + Express 5                 |
+| ORM          | Prisma 7                            |
+| BD           | PostgreSQL                          |
+| Frontend     | HTML5, CSS3, JavaScript vanilla     |
+| Paquetería   | pnpm                                |
