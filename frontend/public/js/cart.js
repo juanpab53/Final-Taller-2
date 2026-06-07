@@ -2,9 +2,8 @@
 // FERVOR Bookstore — Cart Page
 // ─────────────────────────────────────────────────────────
 
-import { api } from './api.js';
-import { $, show, hide, html, text, setLoading, setContent } from './dom.js';
-import { formatPrice } from './dom.js';
+import { api } from '/shared/js/api.js';
+import { $, show, hide, html, text, setLoading, setContent, formatPrice } from '/shared/js/dom.js';
 import { createBookCard } from './ui.js';
 
 /**

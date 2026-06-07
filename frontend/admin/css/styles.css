@@ -569,3 +569,10 @@
 .skeleton--w-16 { width: 4rem; }
 .skeleton--w-24 { width: 6rem; }
 .skeleton--w-36 { width: 9rem; }
+
+/* ── Loading state — disables logout while API calls are in flight ── */
+
+.admin-topbar button.material-symbols-outlined:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

@@ -49,8 +49,8 @@
             <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
               style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
               title="Cambiar tema"></button>
-            <a href="../../public/pages/login.html" class="material-symbols-outlined"
-              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+            <button type="button" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast);">logout</button>
           </div>
       </header>
 
@@ -88,7 +88,7 @@
               </tr>
             </thead>
             <tbody id="inventoryTbody">
-              <!-- admin.js: skeleton → data | empty | error -->
+
             </tbody>
           </table>
         </section>
@@ -110,6 +110,7 @@
   </div>
 
   <script src="/shared/js/utils.js"></script>
+  <script type="module" src="/admin/js/app.js"></script>
 </body>
 
 </html>

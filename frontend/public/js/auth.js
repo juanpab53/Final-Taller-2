@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Auth Module (Login & Register)
 // ─────────────────────────────────────────────────────────
 
-import { api, setToken, setUser } from './api.js';
-import { $, show, hide, text, showError } from './dom.js';
+import { api, setToken, setUser } from '/shared/js/api.js';
+import { $, show, hide, text, showError } from '/shared/js/dom.js';
 
 // ─── Login Page ──────────────────────────────────────
 

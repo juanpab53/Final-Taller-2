@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Header UI & Session Management
 // ─────────────────────────────────────────────────────────
 
-import { api, getUser, removeToken, removeUser } from './api.js';
-import { showLogoutConfirmation } from './ui.js';
+import { api, getUser, isLoading, onLoadingStateChange, removeToken, removeUser } from '/shared/js/api.js';
+import { showLogoutConfirmation } from '/shared/js/ui.js';
 
 // ─── Header User Icon ────────────────────────────────
 
@@ -34,6 +34,7 @@ export function updateAuthUI() {
     logoutBtn.className = 'material-symbols-outlined text-primary p-2 hover:bg-surface-container rounded-full transition-all duration-200';
     logoutBtn.title = 'Cerrar sesión';
     logoutBtn.textContent = 'logout';
+    if (isLoading()) logoutBtn.disabled = true;
     logoutBtn.addEventListener('click', handleLogout);
 
     container.appendChild(userName);
@@ -43,6 +44,13 @@ export function updateAuthUI() {
   // Anonymous: the existing link already points to login — no action needed
 }
 
+// ─── Disable logout while API requests are in flight ─
+
+onLoadingStateChange((active) => {
+  const btn = document.querySelector('button.material-symbols-outlined[title="Cerrar sesión"]');
+  if (btn) btn.disabled = active;
+});
+
 // ─── Logout Handler ─────────────────────────────────
 
 /**
@@ -50,6 +58,8 @@ export function updateAuthUI() {
  * Calls the logout API, clears local session data, and redirects to home.
  */
 async function handleLogout() {
+  if (isLoading()) return;
+
   const confirmed = await showLogoutConfirmation();
   if (!confirmed) return;
 

@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Catalog Page (Search, Filter, Pagination)
 // ─────────────────────────────────────────────────────────
 
-import { api } from './api.js';
-import { $, show, hide, html, text, setLoading, setContent } from './dom.js';
+import { api } from '/shared/js/api.js';
+import { $, show, hide, html, text, setLoading, setContent } from '/shared/js/dom.js';
 import { createBookCard } from './ui.js';
 
 const BOOKS_PER_PAGE = 12;

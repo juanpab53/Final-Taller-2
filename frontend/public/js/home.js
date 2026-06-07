@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Homepage (Featured Books Carousel)
 // ─────────────────────────────────────────────────────────
 
-import { api } from './api.js';
-import { $, show, hide, html, setLoading, setError } from './dom.js';
+import { api } from '/shared/js/api.js';
+import { $, show, hide, html, setLoading, setError } from '/shared/js/dom.js';
 import { createBookCard } from './ui.js';
 
 // Number of books visible per carousel page

@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Order Confirmation Page
 // ─────────────────────────────────────────────────────────
 
-import { api } from './api.js';
-import { $, text, show, hide } from './dom.js';
+import { api } from '/shared/js/api.js';
+import { $, text, show, hide } from '/shared/js/dom.js';
 
 /**
  * Initialize the order confirmation page (/pages/order-confirmation.html).

@@ -2,8 +2,8 @@
 // FERVOR Bookstore — Book Detail Page
 // ─────────────────────────────────────────────────────────
 
-import { api } from './api.js';
-import { $, text, attr, html, show, hide, setLoading, setContent, formatPrice } from './dom.js';
+import { api } from '/shared/js/api.js';
+import { $, text, attr, html, show, hide, setLoading, setContent, formatPrice } from '/shared/js/dom.js';
 
 /**
  * Initialize the book detail page (/pages/book-detail.html).

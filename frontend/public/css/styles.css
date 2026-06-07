@@ -598,3 +598,10 @@
   text-transform: uppercase;
   color: var(--color-secondary);
 }
+
+/* ── Loading state — disables logout while API calls are in flight ── */
+
+button.material-symbols-outlined[title="Cerrar sesión"]:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

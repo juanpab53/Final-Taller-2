@@ -2,7 +2,7 @@
 // FERVOR Bookstore — Application Entry Point
 // ─────────────────────────────────────────────────────────
 
-import { isAuthenticated, getUser } from './api.js';
+import { isAuthenticated, getUser } from '/shared/js/api.js';
 import { updateAuthUI } from './header.js';
 import { initLoginPage, initRegisterPage } from './auth.js';
 import { initHomePage } from './home.js';
