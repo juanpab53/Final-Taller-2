@@ -49,8 +49,8 @@
             <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
               style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
               title="Cambiar tema"></button>
-            <a href="../../public/pages/login.html" class="material-symbols-outlined"
-              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+            <button type="button" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast);">logout</button>
           </div>
         </div>
       </header>
@@ -84,7 +84,6 @@
             </div>
             <div class="stat-card__body hidden" id="cancellation-data">
               <span class="stat-card__value" id="cancellation-value">0%</span>
-              <span class="stat-card__trend stat-card__trend--down">-2.3%</span>
             </div>
           </article>
 
@@ -139,7 +138,6 @@
             </div>
             <div class="stat-card__body hidden" id="lowstock-data">
               <span class="stat-card__value" id="lowstock-value">0</span>
-              <span class="stat-card__trend stat-card__trend--up">+3</span>
             </div>
           </article>
 
@@ -161,6 +159,7 @@
   </div>
 
   <script src="/shared/js/utils.js"></script>
+  <script type="module" src="/admin/js/app.js"></script>
 </body>
 
 </html>

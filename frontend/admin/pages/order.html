@@ -46,8 +46,8 @@
             <button onclick="toggleTheme()" class="theme-toggle material-symbols-outlined"
               style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; cursor: pointer; transition: background-color var(--transition-fast);"
               title="Cambiar tema"></button>
-            <a href="../../public/pages/login.html" class="material-symbols-outlined"
-              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast); text-decoration: none;">logout</a>
+            <button type="button" class="material-symbols-outlined"
+              style="color: var(--color-primary); padding: 0.5rem; border-radius: 9999px; transition: background-color var(--transition-fast);">logout</button>
           </div>
     </header>
 
@@ -76,18 +76,7 @@
         <button class="orders-filter-btn" data-filter="cancelled">Cancelado</button>
       </div>
 
-      <!--
-        Shape esperado del backend por pedido:
-        {
-          id:         string | number,
-          customer:   { name: string, email: string },
-          items:      number,          // cantidad de libros
-          total:      number,          // valor en pesos/dólares
-          status:     "pending" | "processing" | "shipped" | "delivered" | "cancelled",
-          created_at: string (ISO 8601),
-        }
-        Endpoint → admin/js/orders.js → constante API_BASE
-      -->
+    
       <section class="inventory-table-wrap">
         <table class="inventory-table orders-table">
           <thead>
@@ -121,6 +110,7 @@
   </main>
 </div>
 
-<!-- JS pendiente de implementar con endpoints reales -->
+<script src="/shared/js/utils.js"></script>
+<script type="module" src="/admin/js/app.js"></script>
 </body>
 </html>
