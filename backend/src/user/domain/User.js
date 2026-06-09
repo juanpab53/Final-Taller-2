@@ -1,9 +1,10 @@
 import { Email } from "./Email.js";
+import { ValidationError } from "../../shared/errors/ValidationError.js";
 
 export class User {
   constructor({ id, name = "", email, tel = "", role = "CLIENT", passwordHash }) {
     if (!email) {
-      throw new Error("Email is required to create a user.");
+      throw new ValidationError("Email is required to create a user.");
     }
 
     this.id = id;

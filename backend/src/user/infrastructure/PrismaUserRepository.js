@@ -1,8 +1,9 @@
-import { prisma } from "../../shared/infrastructure/database/prismaClient.js";
+import { prisma } from "../../database/prismaClient.js";
 import { User } from "../domain/User.js";
+import { UserRepository } from "../domain/UserRepository.js";
 import { ValidationError } from "../../shared/errors/ValidationError.js";
 
-export class PrismaUserRepository {
+export class PrismaUserRepository extends UserRepository {
   async save(user) {
     try {
       const created = await prisma.user.create({

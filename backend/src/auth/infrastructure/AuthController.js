@@ -12,76 +12,64 @@ export class AuthController {
     this.logoutUseCase = logoutUseCase;
   }
 
-  async login(req, res, next) {
-    try {
-      const request = new LoginRequestDTO(req.body);
-      const result = await this.loginUseCase.execute(request);
+  async login(req, res) {
+    const request = new LoginRequestDTO(req.body);
+    const result = await this.loginUseCase.execute(request);
 
-      res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, {
-        httpOnly: true,
-        secure: SECURE_COOKIES,
-        sameSite: 'strict',
-        maxAge: REFRESH_COOKIE_MAX_AGE,
-      });
+    res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, {
+      httpOnly: true,
+      secure: SECURE_COOKIES,
+      sameSite: 'strict',
+      maxAge: REFRESH_COOKIE_MAX_AGE,
+    });
 
-      res.json({
-        success: true,
-        data: {
-          accessToken: result.accessToken,
-          user: result.payload,
-        },
-      });
-    } catch (err) {
-      next(err);
-    }
+    res.json({
+      success: true,
+      data: {
+        accessToken: result.accessToken,
+        user: result.payload,
+      },
+    });
   }
 
-  async refresh(req, res, next) {
-    try {
-      const refreshToken = req.cookies?.[REFRESH_COOKIE_NAME];
-      if (!refreshToken) {
-        throw new UnauthorizedError('Refresh token not provided.');
-      }
-
-      const result = await this.refreshTokenUseCase.execute({ refreshToken });
-
-      res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, {
-        httpOnly: true,
-        secure: SECURE_COOKIES,
-        sameSite: 'strict',
-        maxAge: REFRESH_COOKIE_MAX_AGE,
-      });
-
-      res.json({
-        success: true,
-        data: {
-          accessToken: result.accessToken,
-          user: result.payload,
-        },
-      });
-    } catch (err) {
-      next(err);
+  async refresh(req, res) {
+    const refreshToken = req.cookies?.[REFRESH_COOKIE_NAME];
+    if (!refreshToken) {
+      throw new UnauthorizedError('Refresh token not provided.');
     }
+
+    const result = await this.refreshTokenUseCase.execute({ refreshToken });
+
+    res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, {
+      httpOnly: true,
+      secure: SECURE_COOKIES,
+      sameSite: 'strict',
+      maxAge: REFRESH_COOKIE_MAX_AGE,
+    });
+
+    res.json({
+      success: true,
+      data: {
+        accessToken: result.accessToken,
+        user: result.payload,
+      },
+    });
   }
 
-  async logout(req, res, next) {
-    try {
-      await this.logoutUseCase.execute();
+  async logout(req, res) {
+    await this.logoutUseCase.execute();
 
-      res.clearCookie(REFRESH_COOKIE_NAME, {
-        httpOnly: true,
-        secure: SECURE_COOKIES,
-        sameSite: 'strict',
-      });
+    res.clearCookie(REFRESH_COOKIE_NAME, {
+      httpOnly: true,
+      secure: SECURE_COOKIES,
+      sameSite: 'strict',
+    });
 
-      res.json({
-        success: true,
-        data: {
-          message: 'Logout successful.',
-        },
-      });
-    } catch (err) {
-      next(err);
-    }
+    res.json({
+      success: true,
+      data: {
+        message: 'Logout successful.',
+      },
+    });
   }
 }
