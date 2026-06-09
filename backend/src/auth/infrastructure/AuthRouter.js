@@ -1,34 +1,12 @@
 import { Router } from 'express';
+import { asyncHandler } from '../../shared/middleware/asyncHandler.js';
 
 export function createAuthRouter({ authController }) {
   const router = Router();
 
-  // Public login endpoint: receives email and password.
-  router.post('/login', async (req, res, next) => {
-    try {
-      await authController.login(req, res, next);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  // Refresh the access token using the httpOnly refresh token cookie.
-  router.post('/refresh', async (req, res, next) => {
-    try {
-      await authController.refresh(req, res, next);
-    } catch (err) {
-      next(err);
-    }
-  });
-
-  // Logout endpoint: clears the refresh token cookie.
-  router.post('/logout', async (req, res, next) => {
-    try {
-      await authController.logout(req, res, next);
-    } catch (err) {
-      next(err);
-    }
-  });
+  router.post('/login', asyncHandler((req, res) => authController.login(req, res)));
+  router.post('/refresh', asyncHandler((req, res) => authController.refresh(req, res)));
+  router.post('/logout', asyncHandler((req, res) => authController.logout(req, res)));
 
   return router;
 }

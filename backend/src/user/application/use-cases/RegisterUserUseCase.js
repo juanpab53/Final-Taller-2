@@ -27,6 +27,12 @@ export class RegisterUserUseCase {
 		});
 
 		const created = await this.userRepository.save(user);
-		return created;
+		return {
+			id: created.id,
+			email: created.email,
+			name: created.name,
+			tel: created.tel,
+			role: created.role,
+		};
 	}
 }

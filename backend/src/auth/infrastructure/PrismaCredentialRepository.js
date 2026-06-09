@@ -1,7 +1,8 @@
-import { prisma } from "../../shared/infrastructure/database/prismaClient.js";
+import { prisma } from "../../database/prismaClient.js";
 import { Credential } from "../domain/Credential.js";
+import { CredentialRepository } from "../domain/CredentialRepository.js";
 
-export class PrismaCredentialRepository {
+export class PrismaCredentialRepository extends CredentialRepository {
   async findByUserId(userId) {
     const row = await prisma.user.findUnique({
       where: { id: userId },
