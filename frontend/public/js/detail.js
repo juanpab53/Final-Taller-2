@@ -44,17 +44,17 @@ export function initDetailPage() {
     try {
       const res = await api(`/api/books/${bookId}`);
 
-      if (!res.success || !res.data?.book) {
+      if (!res.success || !res.data) {
         throw new Error(res.error?.message || 'No se pudo cargar el libro.');
       }
 
-      const book = res.data.book;
+      const book = res.data;
 
       // Breadcrumb
       if (breadcrumbTitle) breadcrumbTitle.textContent = book.name;
 
       // Cover
-      attr(coverImg, 'src', book.image_url || '');
+      attr(coverImg, 'src', book.imageUrl || '');
       attr(coverImg, 'alt', book.name || 'Portada del libro');
 
       // Content
@@ -89,9 +89,12 @@ export function initDetailPage() {
   function renderSpecs(book) {
     const specs = [];
 
-    if (book.publication_date) specs.push({ label: 'Fecha de publicación', value: book.publication_date });
-    if (book.lenguage) specs.push({ label: 'Idioma', value: book.lenguage });
-    if (book.stock !== undefined) specs.push({ label: 'Stock', value: String(book.stock) });
+    if (book.publicationDate) {
+      const d = new Date(book.publicationDate);
+      const fecha = d.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      specs.push({ label: 'Fecha de publicación: ', value: fecha });
+    }
+    if (book.language) specs.push({ label: 'Idioma: ', value: book.language });
 
     if (specsBody) {
       if (specs.length === 0) {

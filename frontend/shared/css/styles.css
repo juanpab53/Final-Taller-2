@@ -933,9 +933,9 @@ input, textarea { font-family: inherit; }
 
 /* ── Utility: Display & Layout ────────────────────────────── */
 .flex { display: flex; }
-.hidden { display: none; }
 .grid { display: grid; }
 .block { display: block; }
+.hidden { display: none; }
 .flex-col { flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
 .items-center { align-items: center; }

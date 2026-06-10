@@ -1,28 +1,19 @@
-// ─────────────────────────────────────────────────────────
-// FERVOR Bookstore — Catalog Page (Search, Filter, Pagination)
-// ─────────────────────────────────────────────────────────
-
 import { api } from '/shared/js/api.js';
 import { $, show, hide, html, text, setLoading, setContent } from '/shared/js/dom.js';
 import { createBookCard } from './ui.js';
 
-const BOOKS_PER_PAGE = 12;
+const BOOKS_PER_PAGE = 8;
 
-/**
- * Initialize the catalog page (/pages/catalogo.html).
- * Manages book search, filter by author/category, pagination, and all UI states.
- */
 export function initCatalogPage() {
-  // Current filter state
   const state = {
     query: '',
-    author: '',
-    category: '',
+    authorId: '',
+    authorName: '',
+    categoryId: '',
+    categoryName: '',
     page: 1,
     totalPages: 0,
   };
-
-  // ─── DOM refs ──────────────────────────────────────
 
   const gridEl = $('books-grid');
   const loadingEl = $('books-loading');
@@ -57,12 +48,10 @@ export function initCatalogPage() {
   // ─── Tab switching ─────────────────────────────────
 
   function switchTab(tab) {
-    // Update active tab style
     [tabSearch, tabFilter].forEach(btn => btn.classList.remove('catalog-tab--active'));
     const activeTab = tab === 'search' ? tabSearch : tabFilter;
     activeTab.classList.add('catalog-tab--active');
 
-    // Toggle panels
     if (tab === 'search') {
       show('panel-search');
       hide('panel-filter');
@@ -75,19 +64,33 @@ export function initCatalogPage() {
   tabSearch?.addEventListener('click', () => switchTab('search'));
   tabFilter?.addEventListener('click', () => switchTab('filter'));
 
-  // ─── Load categories for filter dropdown ──────────
+  // ─── Load authors & categories ─────────────────────
+
+  async function loadAuthors() {
+    try {
+      const res = await api('/api/authors');
+      if (res.success && res.data?.length) {
+        const options = res.data.map(a =>
+          `<option value="${a.id}">${a.name}</option>`
+        ).join('');
+        filterAuthor.innerHTML = '<option value="">Todos los autores</option>' + options;
+      }
+    } catch {
+      // Silently fail
+    }
+  }
 
   async function loadCategories() {
     try {
       const res = await api('/api/categories');
-      if (res.success && res.data?.categories) {
-        const options = res.data.categories.map(cat =>
-          `<option value="${cat.name}">${cat.name}</option>`
+      if (res.success && res.data?.length) {
+        const options = res.data.map(cat =>
+          `<option value="${cat.id}">${cat.name}</option>`
         ).join('');
         filterCategory.innerHTML = '<option value="">Todas las categorías</option>' + options;
       }
     } catch {
-      // Silently fail — categories are optional for the UI
+      // Silently fail
     }
   }
 
@@ -102,15 +105,15 @@ export function initCatalogPage() {
       limit: BOOKS_PER_PAGE,
     };
     if (state.query) params.search = state.query;
-    if (state.author) params.author = state.author;
-    if (state.category) params.category = state.category;
+    if (state.authorId) params.authorId = state.authorId;
+    if (state.categoryId) params.categoryId = state.categoryId;
 
     try {
       const res = await api('/api/books', { params });
 
-      if (res.success && res.data?.books?.length > 0) {
-        renderBooks(res.data.books);
-        state.totalPages = res.data.totalPages || Math.ceil(res.data.total / BOOKS_PER_PAGE);
+      if (res.success && res.data?.length > 0) {
+        renderBooks(res.data);
+        state.totalPages = res.meta.totalPages;
         renderPagination();
         setContent('books-loading', 'books-error', 'books-content');
       } else {
@@ -136,14 +139,11 @@ export function initCatalogPage() {
   function renderPagination() {
     const { page, totalPages } = state;
 
-    // Prev / Next buttons
     prevBtn.disabled = page <= 1;
     nextBtn.disabled = page >= totalPages;
 
-    // Page info text
     text('page-info', `Página ${page} de ${totalPages}`);
 
-    // Dot indicators
     dotsEl.innerHTML = '';
     for (let i = 1; i <= totalPages; i++) {
       const dot = document.createElement('span');
@@ -162,15 +162,19 @@ export function initCatalogPage() {
     }
   }
 
+  function getSelectedText(sel) {
+    return sel.options[sel.selectedIndex]?.text || '';
+  }
+
   function updateActiveChip() {
     if (state.query) {
       show('active-filter-chip');
       text('active-filter-label', `"${state.query}"`);
-    } else if (state.author || state.category) {
+    } else if (state.authorName || state.categoryName) {
       show('active-filter-chip');
       const parts = [];
-      if (state.author) parts.push(`Autor: ${state.author}`);
-      if (state.category) parts.push(`Categoría: ${state.category}`);
+      if (state.authorName) parts.push(`Autor: ${state.authorName}`);
+      if (state.categoryName) parts.push(`Categoría: ${state.categoryName}`);
       text('active-filter-label', parts.join(' | '));
     } else {
       hide('active-filter-chip');
@@ -189,7 +193,13 @@ export function initCatalogPage() {
     searchTimer = setTimeout(() => {
       if (val !== state.query) {
         state.query = val;
+        state.authorId = '';
+        state.authorName = '';
+        state.categoryId = '';
+        state.categoryName = '';
         state.page = 1;
+        filterAuthor.value = '';
+        filterCategory.value = '';
         updateActiveChip();
         loadBooks();
       }
@@ -210,12 +220,20 @@ export function initCatalogPage() {
   // ─── Filter handlers ───────────────────────────────
 
   filterApplyBtn?.addEventListener('click', () => {
-    const author = filterAuthor.value.trim();
-    const category = filterCategory.value;
-    if (author !== state.author || category !== state.category) {
-      state.author = author;
-      state.category = category;
+    const authorId = filterAuthor.value;
+    const categoryId = filterCategory.value;
+    const authorName = authorId ? getSelectedText(filterAuthor) : '';
+    const categoryName = categoryId ? getSelectedText(filterCategory) : '';
+
+    if (authorId !== state.authorId || categoryId !== state.categoryId) {
+      state.query = '';
+      state.authorId = authorId;
+      state.authorName = authorName;
+      state.categoryId = categoryId;
+      state.categoryName = categoryName;
       state.page = 1;
+      searchInput.value = '';
+      searchClearBtn.classList.add('hidden');
       updateActiveChip();
       loadBooks();
     }
@@ -224,9 +242,11 @@ export function initCatalogPage() {
   filterClearBtn?.addEventListener('click', () => {
     filterAuthor.value = '';
     filterCategory.value = '';
-    if (state.author || state.category) {
-      state.author = '';
-      state.category = '';
+    if (state.authorId || state.categoryId) {
+      state.authorId = '';
+      state.authorName = '';
+      state.categoryId = '';
+      state.categoryName = '';
       state.page = 1;
       updateActiveChip();
       loadBooks();
@@ -237,8 +257,10 @@ export function initCatalogPage() {
 
   chipClearBtn?.addEventListener('click', () => {
     state.query = '';
-    state.author = '';
-    state.category = '';
+    state.authorId = '';
+    state.authorName = '';
+    state.categoryId = '';
+    state.categoryName = '';
     state.page = 1;
     searchInput.value = '';
     searchClearBtn.classList.add('hidden');
@@ -252,8 +274,10 @@ export function initCatalogPage() {
 
   emptyClearBtn?.addEventListener('click', () => {
     state.query = '';
-    state.author = '';
-    state.category = '';
+    state.authorId = '';
+    state.authorName = '';
+    state.categoryId = '';
+    state.categoryName = '';
     state.page = 1;
     searchInput.value = '';
     searchClearBtn.classList.add('hidden');
@@ -285,6 +309,7 @@ export function initCatalogPage() {
 
   // ─── Initial load ──────────────────────────────────
 
+  loadAuthors();
   loadCategories();
   loadBooks();
 }

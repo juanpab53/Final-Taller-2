@@ -89,8 +89,10 @@
                             for="filter-author">
                             Autor
                         </label>
-                        <input id="filter-author" class="auth-form__input" type="text" placeholder="Ej. Dieter Rams"
-                            autocomplete="off" />
+                        <select id="filter-author" class="auth-form__input">
+                            <option value="">Todos los autores</option>
+                            <!-- Se llena dinámicamente con los autores del backend -->
+                        </select>
                     </div>
                     <div class="flex flex-col gap-1 flex-1 max-w-xs">
                         <label class="font-mono text-label-sm text-secondary uppercase tracking-wider"

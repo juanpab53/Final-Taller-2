@@ -150,7 +150,17 @@ export function initRegisterPage() {
       });
 
       if (res.success) {
-        window.location.href = '/pages/login.html?registered=true';
+        const loginRes = await api('/api/auth/login', {
+          method: 'POST',
+          body: { email, password },
+        });
+        if (loginRes.success) {
+          setToken(loginRes.data.accessToken);
+          setUser(loginRes.data.user);
+          window.location.href = loginRes.data.user.role === 'ADMIN' ? '/admin/index.html' : '/index.html';
+        } else {
+          window.location.href = '/pages/login.html?registered=true';
+        }
       } else {
         if (errorContainer) {
           const span = errorContainer.querySelector('span:last-child');
