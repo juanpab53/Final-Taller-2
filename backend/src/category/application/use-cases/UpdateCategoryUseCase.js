@@ -4,6 +4,8 @@ export class UpdateCategoryUseCase {
   }
 
   async execute({ id, dto }) {
-    return this.categoryRepository.update(id, { name: dto.name });
+    const data = {};
+    if (dto.name !== undefined) data.name = dto.name;
+    return this.categoryRepository.update(id, data);
   }
 }
