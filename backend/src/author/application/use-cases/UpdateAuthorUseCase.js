@@ -4,6 +4,8 @@ export class UpdateAuthorUseCase {
   }
 
   async execute({ id, dto }) {
-    return this.authorRepository.update(id, { name: dto.name });
+    const data = {};
+    if (dto.name !== undefined) data.name = dto.name;
+    return this.authorRepository.update(id, data);
   }
 }
