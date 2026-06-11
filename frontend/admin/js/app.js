@@ -11,6 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // ─── Sidebar toggle (mobile) ───────────────────────────
+
+  const sidenav = document.querySelector('.sidenav');
+  const toggle = document.getElementById('sidenav-toggle');
+  const overlay = document.getElementById('sidenav-overlay');
+
+  function toggleSidenav(open) {
+    if (!sidenav || !overlay) return;
+    sidenav.classList.toggle('is-open', open);
+    overlay.classList.toggle('is-visible', open);
+  }
+
+  if (toggle && overlay) {
+    toggle.addEventListener('click', () => toggleSidenav(true));
+    overlay.addEventListener('click', () => toggleSidenav(false));
+  }
+
+  document.querySelectorAll('.sidenav__link').forEach(link => {
+    link.addEventListener('click', () => toggleSidenav(false));
+  });
+
   const topbar = document.querySelector('.admin-topbar');
 
   // ─── Find logout button ─────────────────────────────
