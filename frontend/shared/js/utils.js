@@ -1,6 +1,6 @@
 (function () {
   const html = document.documentElement;
-  const saved = localStorage.getItem("bibliotheca-theme");
+  const saved = localStorage.getItem("fervor-theme");
 
   if (saved === "dark") {
     html.setAttribute("data-theme", "dark");
@@ -15,10 +15,10 @@
     const isDark = html.getAttribute("data-theme") === "dark";
     if (isDark) {
       html.removeAttribute("data-theme");
-      localStorage.setItem("bibliotheca-theme", "light");
+      localStorage.setItem("fervor-theme", "light");
     } else {
       html.setAttribute("data-theme", "dark");
-      localStorage.setItem("bibliotheca-theme", "dark");
+      localStorage.setItem("fervor-theme", "dark");
     }
 
     // Remove the class after transitions finish (350ms + small buffer)

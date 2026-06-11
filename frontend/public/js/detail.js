@@ -54,7 +54,8 @@ export function initDetailPage() {
       if (breadcrumbTitle) breadcrumbTitle.textContent = book.name;
 
       // Cover
-      attr(coverImg, 'src', book.imageUrl || '');
+      const fallbackImg = 'https://picsum.photos/seed/' + encodeURIComponent(book.name || 'book') + '/300/400';
+      attr(coverImg, 'src', book.imageUrl || fallbackImg);
       attr(coverImg, 'alt', book.name || 'Portada del libro');
 
       // Content
