@@ -17,6 +17,102 @@
   transform: scale(1.05);
 }
 
+/* ── Catalog Tabs ────────────────────────────────────────── */
+.catalog-tab {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border: 1px solid transparent;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.catalog-tab:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+}
+
+.catalog-tab--active {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+  border-color: var(--color-outline-variant);
+}
+
+/* ── Catalog ghost action buttons ────────────────────────── */
+.catalog-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  color: var(--color-secondary);
+  background-color: transparent;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.catalog-action-btn:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+  border-color: var(--color-outline-variant);
+}
+
+/* ── Catalog chip close ──────────────────────────────────── */
+.catalog-chip-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-secondary);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.catalog-chip-clear:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+}
+
+/* ── Catalog pagination ──────────────────────────────────── */
+.catalog-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  color: var(--color-secondary);
+  background-color: transparent;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.catalog-page-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-container);
+  color: var(--color-primary);
+  border-color: var(--color-outline-variant);
+}
+
+.catalog-page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* ── Cart Page ────────────────────────────────────────────── */
 
 /* Page header */

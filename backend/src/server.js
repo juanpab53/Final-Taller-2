@@ -4,6 +4,19 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
 import path from "path";
+
+const requiredEnvVars = [
+  'DATABASE_URL',
+  'JWT_SECRET',
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+];
+const missing = requiredEnvVars.filter(k => !process.env[k]);
+if (missing.length > 0) {
+  console.error(`Missing required environment variables: ${missing.join(', ')}`);
+  process.exit(1);
+}
+
 import { errorHandler } from "./shared/middleware/errorHandler.js";
 import { NotFoundError } from "./shared/errors/NotFoundError.js";
 import { createAuthMiddleware } from "./shared/middleware/authMiddleware.js";
@@ -85,7 +98,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:5500",
+  origin: process.env.CORS_ORIGIN || (process.env.NODE_ENV === 'production' ? false : "http://localhost:5500"),
   credentials: true,
 }));
 app.use(cookieParser());

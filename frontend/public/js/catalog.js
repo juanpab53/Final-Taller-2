@@ -25,7 +25,6 @@ export function initCatalogPage() {
 
   const tabSearch = $('tab-search');
   const tabFilter = $('tab-filter');
-  const panelSearch = $('panel-search');
   const panelFilter = $('panel-filter');
 
   const searchInput = $('search-input');
@@ -48,16 +47,17 @@ export function initCatalogPage() {
   // ─── Tab switching ─────────────────────────────────
 
   function switchTab(tab) {
-    [tabSearch, tabFilter].forEach(btn => btn.classList.remove('catalog-tab--active'));
-    const activeTab = tab === 'search' ? tabSearch : tabFilter;
-    activeTab.classList.add('catalog-tab--active');
-
-    if (tab === 'search') {
-      show('panel-search');
-      hide('panel-filter');
+    if (tab === 'filter') {
+      const isActive = tabFilter.classList.toggle('catalog-tab--active');
+      if (isActive) {
+        show('panel-filter');
+      } else {
+        hide('panel-filter');
+      }
     } else {
-      hide('panel-search');
-      show('panel-filter');
+      tabFilter.classList.remove('catalog-tab--active');
+      hide('panel-filter');
+      searchInput?.focus();
     }
   }
 
