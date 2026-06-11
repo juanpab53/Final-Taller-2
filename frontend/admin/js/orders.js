@@ -11,6 +11,8 @@ import { $, html } from '/shared/js/dom.js';
 
 let ordersCache = [];
 let currentFilter = 'all';
+let currentPage = 1;
+let totalPages = 1;
 
 const STATUS_LABELS = {
   all: 'Todos',
@@ -49,6 +51,14 @@ export function initOrdersPage() {
   // Export CSV
   document.getElementById('exportOrdersBtn')?.addEventListener('click', exportCSV);
 
+  // Pagination
+  document.getElementById('orders-prev')?.addEventListener('click', () => {
+    if (currentPage > 1) { currentPage--; loadOrders(); }
+  });
+  document.getElementById('orders-next')?.addEventListener('click', () => {
+    if (currentPage < totalPages) { currentPage++; loadOrders(); }
+  });
+
   loadOrders();
 }
 
@@ -57,7 +67,8 @@ async function loadOrders() {
   if (!tbody) return;
 
   try {
-    const params = currentFilter !== 'all' ? { status: currentFilter } : {};
+    const params = { page: currentPage, limit: 15 };
+    if (currentFilter !== 'all') params.status = currentFilter;
     const res = await api('/api/admin/orders', { params });
 
     if (!res.success || !res.data?.orders) {
@@ -65,7 +76,16 @@ async function loadOrders() {
     }
 
     const orders = res.data.orders;
+    const meta = res.data.meta;
     ordersCache = orders;
+    totalPages = meta?.totalPages || 1;
+
+    const pageInfo = document.getElementById('orders-page-info');
+    if (pageInfo) pageInfo.textContent = `Página ${meta?.page || currentPage} de ${totalPages}`;
+    const prevBtn = document.getElementById('orders-prev');
+    const nextBtn = document.getElementById('orders-next');
+    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
 
     if (orders.length === 0) {
       tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:3rem;color:var(--color-secondary)">No hay pedidos ${currentFilter !== 'all' ? `con estado "${STATUS_LABELS[currentFilter]}"` : ''}</td></tr>`;

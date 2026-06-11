@@ -6,7 +6,7 @@ import { formatPrice } from '/shared/js/dom.js';
 
 export function createBookCard(book) {
   const price = formatPrice(book.price);
-  const image = book.image_url || 'https://picsum.photos/seed/' + encodeURIComponent(book.name) + '/300/400';
+  const image = book.imageUrl || 'https://picsum.photos/seed/' + encodeURIComponent(book.name) + '/300/400';
   const authorName = book.author?.name || 'Autor desconocido';
   const href = '/pages/book-detail.html?id=' + book.id;
   return `

@@ -1,5 +1,6 @@
 export class PaymentController {
-  constructor({ handleStripeWebhookUseCase, verifyPaymentUseCase }) {
+  constructor({ stripeGateway, handleStripeWebhookUseCase, verifyPaymentUseCase }) {
+    this.stripeGateway = stripeGateway;
     this.handleStripeWebhookUseCase = handleStripeWebhookUseCase;
     this.verifyPaymentUseCase = verifyPaymentUseCase;
   }
@@ -10,10 +11,8 @@ export class PaymentController {
       return res.status(400).json({ success: false, error: { message: 'Missing stripe-signature header.' } });
     }
 
-    const result = await this.handleStripeWebhookUseCase.execute({
-      event: { type: req.body.type, data: req.body.data },
-    });
-
+    const event = this.stripeGateway.verifyWebhookSignature(req.body, sig);
+    const result = await this.handleStripeWebhookUseCase.execute({ event });
     res.json({ success: true, data: result });
   }
 

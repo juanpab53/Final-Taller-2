@@ -4,6 +4,19 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
 import path from "path";
+
+const requiredEnvVars = [
+  'DATABASE_URL',
+  'JWT_SECRET',
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+];
+const missing = requiredEnvVars.filter(k => !process.env[k]);
+if (missing.length > 0) {
+  console.error(`Missing required environment variables: ${missing.join(', ')}`);
+  process.exit(1);
+}
+
 import { errorHandler } from "./shared/middleware/errorHandler.js";
 import { NotFoundError } from "./shared/errors/NotFoundError.js";
 import { createAuthMiddleware } from "./shared/middleware/authMiddleware.js";
@@ -65,6 +78,7 @@ import { GetUserOrdersUseCase } from "./order/application/GetUserOrdersUseCase.j
 import { GetOrderDetailUseCase } from "./order/application/GetOrderDetailUseCase.js";
 import { ListAllOrdersUseCase } from "./order/application/ListAllOrdersUseCase.js";
 import { UpdateOrderStatusUseCase } from "./order/application/UpdateOrderStatusUseCase.js";
+import { GetStatsUseCase } from "./order/application/GetStatsUseCase.js";
 import { OrderController } from "./order/infrastructure/OrderController.js";
 import { createOrderRouter } from "./order/infrastructure/OrderRouter.js";
 import { AdminOrderController } from "./order/infrastructure/AdminOrderController.js";
@@ -84,25 +98,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:5500",
+  origin: process.env.CORS_ORIGIN || (process.env.NODE_ENV === 'production' ? false : "http://localhost:5500"),
   credentials: true,
 }));
 app.use(cookieParser());
 
-// ─── Stripe Webhook (raw body required before express.json) ───
-app.post("/api/payments/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
-  try {
-    const sig = req.headers['stripe-signature'];
-    if (!sig) {
-      return res.status(400).json({ success: false, error: { message: 'Missing stripe-signature header.' } });
-    }
-
-    const event = stripeGateway.verifyWebhookSignature(req.body, sig);
-    const result = await handleStripeWebhookUseCase.execute({ event });
-    res.json({ success: true, data: result });
-  } catch (err) {
-    res.status(400).json({ success: false, error: { message: err.message || 'Webhook error.' } });
-  }
+// Stripe webhook — raw body required; register before express.json
+app.post("/api/payments/webhook", express.raw({ type: 'application/json' }), (req, res, next) => {
+  paymentController.handleWebhook(req, res).catch(next);
 });
 
 app.use(express.json());
@@ -168,12 +171,13 @@ const orderController = new OrderController({ createOrderUseCase, getUserOrdersU
 
 const listAllOrdersUseCase = new ListAllOrdersUseCase({ orderRepository });
 const updateOrderStatusUseCase = new UpdateOrderStatusUseCase({ orderRepository });
-const adminOrderController = new AdminOrderController({ listAllOrdersUseCase, updateOrderStatusUseCase });
+const getStatsUseCase = new GetStatsUseCase({ orderRepository, bookRepository });
+const adminOrderController = new AdminOrderController({ listAllOrdersUseCase, updateOrderStatusUseCase, getStatsUseCase });
 
 // ─── Payment ────────────────────────────────────────────
-const handleStripeWebhookUseCase = new HandleStripeWebhookUseCase({ paymentRepository, orderRepository });
+const handleStripeWebhookUseCase = new HandleStripeWebhookUseCase({ paymentRepository, orderRepository, cartRepository });
 const verifyPaymentUseCase = new VerifyPaymentUseCase({ stripeGateway, paymentRepository });
-const paymentController = new PaymentController({ handleStripeWebhookUseCase, verifyPaymentUseCase });
+const paymentController = new PaymentController({ stripeGateway, handleStripeWebhookUseCase, verifyPaymentUseCase });
 
 const userRouter = createUserRouter({ userController, authMiddleware, requireRole });
 const authRouter = createAuthRouter({ authController });
@@ -214,18 +218,6 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Public frontend:  http://localhost:${PORT}`);
-  console.log(`Admin panel:      http://localhost:${PORT}/admin`);
-  console.log(`Shared resources: http://localhost:${PORT}/shared`);
-  console.log(`API health:       http://localhost:${PORT}/api/health`);
-  console.log(`Auth router:      http://localhost:${PORT}/api/auth`);
-  console.log(`User router:      http://localhost:${PORT}/api/users`);
-  console.log(`Authors router:   http://localhost:${PORT}/api/authors`);
-  console.log(`Categories router: http://localhost:${PORT}/api/categories`);
-  console.log(`Books router:     http://localhost:${PORT}/api/books`);
-  console.log(`Cart router:      http://localhost:${PORT}/api/cart`);
-  console.log(`Orders router:    http://localhost:${PORT}/api/orders`);
-  console.log(`Admin orders:     http://localhost:${PORT}/api/admin/orders`);
-  console.log(`Payments router:  http://localhost:${PORT}/api/payments`);
+  const mode = process.env.NODE_ENV || 'development';
+  console.log(`\n  FERVOR Bookstore — http://localhost:${PORT} (${mode})\n`);
 });

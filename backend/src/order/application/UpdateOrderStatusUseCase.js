@@ -1,4 +1,5 @@
 import { ValidationError } from "../../shared/errors/ValidationError.js";
+import { NotFoundError } from "../../shared/errors/NotFoundError.js";
 
 const VALID_TRANSITIONS = {
   PENDING: ['PAID', 'CANCELLED'],
@@ -22,6 +23,7 @@ export class UpdateOrderStatusUseCase {
     }
 
     const order = await this.orderRepository.findById(id);
+    if (!order) throw new NotFoundError('Order not found.');
 
     const allowed = VALID_TRANSITIONS[order.state] || [];
     if (!allowed.includes(newStatus)) {

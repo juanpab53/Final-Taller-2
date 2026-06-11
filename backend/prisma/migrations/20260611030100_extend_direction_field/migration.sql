@@ -1,0 +1,1 @@
+ALTER TABLE "order" ALTER COLUMN "direction" TYPE TEXT;

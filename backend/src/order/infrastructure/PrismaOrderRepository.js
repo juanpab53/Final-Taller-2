@@ -2,6 +2,19 @@ import { prisma } from "../../database/prismaClient.js";
 import { OrderRepository } from "../domain/OrderRepository.js";
 import { NotFoundError } from "../../shared/errors/NotFoundError.js";
 
+function startOfDay() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function startOfMonth() {
+  const d = new Date();
+  d.setDate(1);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
 export class PrismaOrderRepository extends OrderRepository {
   async save(order) {
     const created = await prisma.order.create({
@@ -52,31 +65,44 @@ export class PrismaOrderRepository extends OrderRepository {
     return rows.map(r => this._mapToOrder(r));
   }
 
-  async findAll(filters) {
+  async findAll(filters, page = 1, limit = 15) {
     const where = {};
     if (filters.status && filters.status !== 'all') {
       where.state = filters.status.toUpperCase();
     }
 
-    const rows = await prisma.order.findMany({
-      where,
-      include: {
-        order_details: true,
-        user: true,
-      },
-      orderBy: { created_at: 'desc' },
-    });
+    const [rows, total] = await Promise.all([
+      prisma.order.findMany({
+        where,
+        include: {
+          order_details: true,
+          user: true,
+        },
+        orderBy: { created_at: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.order.count({ where }),
+    ]);
 
-    return rows.map(r => ({
-      id: r.id,
-      userId: r.user_id,
-      state: r.state,
-      total: Number(r.total),
-      direction: r.direction,
-      customer: r.user ? { name: r.user.name, email: r.user.email } : null,
-      items: r.order_details.length,
-      createdAt: r.created_at,
-    }));
+    return {
+      orders: rows.map(r => ({
+        id: r.id,
+        userId: r.user_id,
+        state: r.state,
+        total: Number(r.total),
+        direction: r.direction,
+        customer: r.user ? { name: r.user.name, email: r.user.email } : null,
+        items: r.order_details.length,
+        createdAt: r.created_at,
+      })),
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit) || 1,
+      },
+    };
   }
 
   async updateStatus(id, state) {
@@ -94,6 +120,27 @@ export class PrismaOrderRepository extends OrderRepository {
       if (err?.code === 'P2025') throw new NotFoundError('Order not found.');
       throw err;
     }
+  }
+
+  async findStats() {
+    const [total, cancelled, dailyAgg, monthlyAgg] = await Promise.all([
+      prisma.order.count(),
+      prisma.order.count({ where: { state: 'CANCELLED' } }),
+      prisma.order.aggregate({
+        where: { state: 'PAID', created_at: { gte: startOfDay() } },
+        _sum: { total: true },
+      }),
+      prisma.order.aggregate({
+        where: { state: 'PAID', created_at: { gte: startOfMonth() } },
+        _sum: { total: true },
+      }),
+    ]);
+
+    return {
+      cancellationRate: total > 0 ? Number(((cancelled / total) * 100).toFixed(1)) : 0,
+      dailyRevenue: Number(dailyAgg._sum.total || 0),
+      monthlyRevenue: Number(monthlyAgg._sum.total || 0),
+    };
   }
 
   _mapToOrder(row) {

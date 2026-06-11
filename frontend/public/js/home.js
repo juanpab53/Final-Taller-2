@@ -1,22 +1,17 @@
-// ─────────────────────────────────────────────────────────
-// FERVOR Bookstore — Homepage (Featured Books Carousel)
-// ─────────────────────────────────────────────────────────
-
 import { api } from '/shared/js/api.js';
 import { $, show, hide, html, setLoading, setError } from '/shared/js/dom.js';
 import { createBookCard } from './ui.js';
 
-// Number of books visible per carousel page
-const BOOKS_PER_PAGE = 4;
+const VISIBLE = 4;
+const STEP = 1;
+const TOTAL_BOOKS = 8;
+const AUTO_INTERVAL = 5000;
 
-/**
- * Initialize the homepage carousel (/index.html).
- * Fetches featured books and renders a paginated carousel (4 at a time).
- */
 export function initHomePage() {
   let books = [];
-  let currentPage = 0;
-  let totalPages = 0;
+  let currentStep = 0;
+  let totalSteps = 0;
+  let autoTimer = null;
 
   const loadingEl = $('books-loading');
   const errorEl = $('books-error');
@@ -27,24 +22,65 @@ export function initHomePage() {
   const dotsEl = $('carousel-dots');
   const retryBtn = $('books-retry');
 
-  /**
-   * Fetch books from the API and render the carousel.
-   */
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoTimer = setInterval(() => {
+      if (currentStep < totalSteps - 1) {
+        currentStep++;
+        updateSlide();
+      } else {
+        currentStep = 0;
+        updateSlide();
+      }
+    }, AUTO_INTERVAL);
+  }
+
+  function stopAutoPlay() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function restartAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+  }
+
+  function getCardWidth() {
+    const card = trackEl.querySelector('.book-card');
+    if (!card) return 0;
+    const style = getComputedStyle(trackEl);
+    const gap = parseFloat(style.columnGap) || 0;
+    return card.offsetWidth + gap;
+  }
+
+  function updateSlide() {
+    const stepWidth = getCardWidth();
+    trackEl.style.transform = `translateX(-${currentStep * stepWidth}px)`;
+
+    prevBtn.disabled = currentStep === 0;
+    nextBtn.disabled = currentStep >= totalSteps - 1;
+
+    renderDots();
+  }
+
   async function loadBooks() {
     setLoading('books-loading', 'books-error', 'books-carousel');
 
     try {
-      const res = await api('/api/books', { params: { page: 1, limit: 20 } });
+      const res = await api('/api/books', { params: { page: 1, limit: TOTAL_BOOKS } });
 
-      if (res.success && res.data?.books?.length > 0) {
-        books = res.data.books;
-        currentPage = 0;
-        totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
-        renderPage();
+      if (res.success && res.data?.length > 0) {
+        books = res.data;
+        currentStep = 0;
+        totalSteps = Math.max(1, books.length - VISIBLE + 1);
+        trackEl.innerHTML = books.map(book => createBookCard(book)).join('');
+        updateSlide();
         show('books-carousel');
         hide('books-loading');
+        startAutoPlay();
       } else {
-        // No books available — hide everything (loading was already showing)
         hide('books-loading');
       }
     } catch (err) {
@@ -53,70 +89,49 @@ export function initHomePage() {
     }
   }
 
-  /**
-   * Render the current page of books into the carousel track.
-   */
-  function renderPage() {
-    const start = currentPage * BOOKS_PER_PAGE;
-    const end = start + BOOKS_PER_PAGE;
-    const pageBooks = books.slice(start, end);
-    const cardsHtml = pageBooks.map(book => createBookCard(book)).join('');
-    trackEl.innerHTML = cardsHtml;
-
-    // Update navigation state
-    prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage >= totalPages - 1;
-
-    renderDots();
-  }
-
-  /**
-   * Render dot indicators for each carousel page.
-   */
   function renderDots() {
     dotsEl.innerHTML = '';
-    for (let i = 0; i < totalPages; i++) {
+    for (let i = 0; i < totalSteps; i++) {
       const dot = document.createElement('span');
       dot.className = 'inline-block w-2 h-2 rounded-full transition-all duration-200 cursor-pointer';
       dot.style.cssText = `
-        background: ${i === currentPage ? 'var(--color-primary, #000)' : 'var(--color-outline-variant, #ccc)'};
-        width: ${i === currentPage ? '24px' : '8px'};
+        background: ${i === currentStep ? 'var(--color-primary, #000)' : 'var(--color-outline-variant, #ccc)'};
+        width: ${i === currentStep ? '24px' : '8px'};
         border-radius: 999px;
       `;
       dot.addEventListener('click', () => {
-        currentPage = i;
-        renderPage();
+        currentStep = i;
+        updateSlide();
+        restartAutoPlay();
       });
       dotsEl.appendChild(dot);
     }
   }
 
-  /**
-   * Set the error text inside the error container.
-   */
   function showErrorText(msg) {
     const textEl = errorEl?.querySelector('p');
     if (textEl) textEl.textContent = msg;
   }
 
-  // ─── Event Listeners ─────────────────────────────
-
   prevBtn?.addEventListener('click', () => {
-    if (currentPage > 0) {
-      currentPage--;
-      renderPage();
+    if (currentStep > 0) {
+      currentStep--;
+      updateSlide();
+      restartAutoPlay();
     }
   });
 
   nextBtn?.addEventListener('click', () => {
-    if (currentPage < totalPages - 1) {
-      currentPage++;
-      renderPage();
+    if (currentStep < totalSteps - 1) {
+      currentStep++;
+      updateSlide();
+      restartAutoPlay();
     }
   });
 
   retryBtn?.addEventListener('click', loadBooks);
 
-  // Initial load
+  window.addEventListener('resize', updateSlide);
+
   loadBooks();
 }

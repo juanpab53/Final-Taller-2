@@ -52,16 +52,14 @@ export function initLoginPage() {
         body: { email, password },
       });
 
-      if (res.success && res.data) {
-        setToken(res.data.accessToken);
-        setUser(res.data.user);
-        if (res.data.user.role === 'ADMIN') {
-          window.location.href = '/admin/index.html';
-        } else {
-          window.location.href = '/index.html';
-        }
+      if (!res.success || !res.data) throw new Error('Credenciales inválidas.');
+
+      setToken(res.data.accessToken);
+      setUser(res.data.user);
+      if (res.data.user.role === 'ADMIN') {
+        window.location.href = '/admin/index.html';
       } else {
-        showError('auth-error', 'Credenciales inválidas. Intenta de nuevo.');
+        window.location.href = '/index.html';
       }
     } catch (err) {
       showError('auth-error', err.message);
@@ -149,15 +147,21 @@ export function initRegisterPage() {
         body: { name, email, tel: phone, password },
       });
 
-      if (res.success) {
+      if (!res.success) throw new Error('Error al registrar. Intenta de nuevo.');
+
+      const loginRes = await api('/api/auth/login', {
+        method: 'POST',
+        body: { email, password },
+      });
+
+      if (!loginRes.success || !loginRes.data) {
         window.location.href = '/pages/login.html?registered=true';
-      } else {
-        if (errorContainer) {
-          const span = errorContainer.querySelector('span:last-child');
-          if (span) span.textContent = res.message || 'Error al registrar. Intenta de nuevo.';
-          errorContainer.classList.remove('hidden');
-        }
+        return;
       }
+
+      setToken(loginRes.data.accessToken);
+      setUser(loginRes.data.user);
+      window.location.href = loginRes.data.user.role === 'ADMIN' ? '/admin/index.html' : '/index.html';
     } catch (err) {
       if (errorContainer) {
         const span = errorContainer.querySelector('span:last-child');

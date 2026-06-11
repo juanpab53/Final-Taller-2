@@ -144,6 +144,7 @@ async function attemptTokenRefresh() {
     const data = await res.json();
     if (data.success && data.data?.accessToken) {
       setToken(data.data.accessToken);
+      if (data.data.user) setUser(data.data.user);
       return true;
     }
     return false;

@@ -43,17 +43,19 @@ model user{
   tel           String   @db.VarChar(50)
   role          role     @default(CLIENT)
   password_hash String   @db.VarChar(60)
-  cart      cart?
+  carts     cart[]
   orders order[]
 }
 
 model cart {
   id        String     @id @default(uuid()) @db.Uuid
-  user_id   String     @unique @db.Uuid
+  user_id   String     @db.Uuid
   user      user      @relation(fields: [user_id], references: [id])
   state     cart_state  @default(ACTIVE)
   expired_at DateTime?   @db.Timestamp
   cartItems cartItem[]
+
+  @@index([user_id])
 }
 
 model cartItem {
@@ -69,7 +71,7 @@ model cartItem {
 model order{
   id          String   @id @default(uuid()) @db.Uuid
   state       order_state @default(PENDING)
-  direction   String   @db.VarChar(255) 
+  direction   String   @db.Text 
   created_at  DateTime @default(now()) @db.Timestamp
   total       Float 
   user_id     String   @db.Uuid
@@ -110,7 +112,7 @@ model book{
   image_url         String?  @db.VarChar(500)
   publication_date  DateTime @db.Date
   description       String?  @db.Text
-  lenguage          String   @db.VarChar(50)
+  language          String   @db.VarChar(50)
   order_details     order_detail[]
   cartItems         cartItem[]
   author_id         String   @db.Uuid
