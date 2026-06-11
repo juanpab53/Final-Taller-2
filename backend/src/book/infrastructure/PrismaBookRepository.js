@@ -68,7 +68,7 @@ export class PrismaBookRepository extends BookRepository {
     if (data.imageUrl !== undefined) prismaData.image_url = data.imageUrl;
     if (data.publicationDate !== undefined) prismaData.publication_date = data.publicationDate;
     if (data.description !== undefined) prismaData.description = data.description;
-    if (data.language !== undefined) prismaData.lenguage = data.language;
+    if (data.language !== undefined) prismaData.language = data.language;
     if (data.authorId !== undefined) prismaData.author_id = data.authorId;
     if (data.categoryId !== undefined) prismaData.category_id = data.categoryId;
 
@@ -109,6 +109,10 @@ export class PrismaBookRepository extends BookRepository {
     }
   }
 
+  async countLowStock(threshold = 5) {
+    return prisma.book.count({ where: { stock: { lt: threshold } } });
+  }
+
   _mapBookToPrisma(book) {
     return {
       name: book.name,
@@ -117,7 +121,7 @@ export class PrismaBookRepository extends BookRepository {
       image_url: book.imageUrl,
       publication_date: book.publicationDate,
       description: book.description,
-      lenguage: book.language,
+      language: book.language,
       author_id: book.authorId,
       category_id: book.categoryId,
     };
@@ -132,7 +136,7 @@ export class PrismaBookRepository extends BookRepository {
       imageUrl: row.image_url,
       publicationDate: row.publication_date,
       description: row.description,
-      language: row.lenguage,
+      language: row.language,
       authorId: row.author_id,
       categoryId: row.category_id,
       author: row.author ? { id: row.author.id, name: row.author.name } : undefined,

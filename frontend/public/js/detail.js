@@ -109,8 +109,43 @@ export function initDetailPage() {
 
   // ─── Add to cart ────────────────────────────────────
 
-  addBtn?.addEventListener('click', () => {
-    // TODO: integrate with cart
+  addBtn?.addEventListener('click', async () => {
+    const bookId = addBtn.dataset.bookId;
+    if (!bookId) return;
+
+    const token = localStorage.getItem('fervor-token');
+    if (!token) {
+      window.location.href = '/pages/login.html';
+      return;
+    }
+
+    addBtn.disabled = true;
+    addBtn.textContent = 'Agregando...';
+
+    try {
+      const res = await api('/api/cart/items', {
+        method: 'POST',
+        body: { bookId, quantity: 1 },
+      });
+
+      if (res.success) {
+        addBtn.textContent = '✓ Agregado';
+        addBtn.classList.add('btn--added');
+        setTimeout(() => {
+          addBtn.textContent = 'Agregar al carrito';
+          addBtn.disabled = false;
+          addBtn.classList.remove('btn--added');
+        }, 2000);
+      } else {
+        throw new Error(res.error?.message || 'Error al agregar al carrito.');
+      }
+    } catch (err) {
+      addBtn.textContent = 'Error';
+      setTimeout(() => {
+        addBtn.textContent = 'Agregar al carrito';
+        addBtn.disabled = false;
+      }, 1500);
+    }
   });
 
   // ─── Start ──────────────────────────────────────────

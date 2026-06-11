@@ -5,4 +5,5 @@ export class BookRepository {
   async update(id, data) { throw new Error('BookRepository.update not implemented.'); }
   async delete(id) { throw new Error('BookRepository.delete not implemented.'); }
   async updateStock(id, quantity) { throw new Error('BookRepository.updateStock not implemented.'); }
+  async countLowStock(threshold) { throw new Error('BookRepository.countLowStock not implemented.'); }
 }

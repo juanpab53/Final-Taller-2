@@ -110,7 +110,7 @@ model book{
   image_url         String?  @db.VarChar(500)
   publication_date  DateTime @db.Date
   description       String?  @db.Text
-  lenguage          String   @db.VarChar(50)
+  language          String   @db.VarChar(50)
   order_details     order_detail[]
   cartItems         cartItem[]
   author_id         String   @db.Uuid
