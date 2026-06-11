@@ -3,6 +3,9 @@ import { $ } from '/shared/js/dom.js';
 
 let booksCache = [];
 let editingBookId = null;
+let inventoryPage = 1;
+let inventoryTotalPages = 1;
+const INVENTORY_PER_PAGE = 15;
 
 const SKELETON_ROWS = `
   <tr><td colspan="7"><div class="skeleton skeleton--display" style="height:6rem;margin-bottom:0.75rem"></div></td></tr>
@@ -30,6 +33,13 @@ export function initInventoryPage() {
   document.getElementById('book-modal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeBookModal();
   });
+
+  document.getElementById('inventory-prev')?.addEventListener('click', () => {
+    if (inventoryPage > 1) { inventoryPage--; loadBooks(); }
+  });
+  document.getElementById('inventory-next')?.addEventListener('click', () => {
+    if (inventoryPage < inventoryTotalPages) { inventoryPage++; loadBooks(); }
+  });
 }
 
 // ─── Load books ──────────────────────────────────────
@@ -39,14 +49,23 @@ async function loadBooks() {
   if (!tbody) return;
 
   try {
-    const res = await api('/api/books', { params: { limit: 100 } });
+    const res = await api('/api/books', { params: { page: inventoryPage, limit: INVENTORY_PER_PAGE } });
 
     if (!res.success || !res.data?.length) {
       throw new Error(res.error?.message || 'Error al cargar inventario.');
     }
 
     const books = res.data;
+    const meta = res.meta;
     booksCache = books;
+    inventoryTotalPages = meta?.totalPages || 1;
+
+    const pageInfo = document.getElementById('inventory-page-info');
+    if (pageInfo) pageInfo.textContent = `Página ${inventoryPage} de ${inventoryTotalPages}`;
+    const prevBtn = document.getElementById('inventory-prev');
+    const nextBtn = document.getElementById('inventory-next');
+    if (prevBtn) prevBtn.disabled = inventoryPage <= 1;
+    if (nextBtn) nextBtn.disabled = inventoryPage >= inventoryTotalPages;
 
     if (books.length === 0) {
       tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding:3rem;color:var(--color-secondary)">No hay libros registrados</td></tr>`;

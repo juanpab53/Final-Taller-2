@@ -3,8 +3,7 @@ export class ListAllOrdersUseCase {
     this.orderRepository = orderRepository;
   }
 
-  async execute({ status }) {
-    const orders = await this.orderRepository.findAll({ status });
-    return { orders };
+  async execute({ status, page = 1, limit = 15 }) {
+    return this.orderRepository.findAll({ status }, Number(page), Number(limit));
   }
 }

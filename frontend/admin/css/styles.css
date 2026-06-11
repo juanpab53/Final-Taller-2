@@ -720,3 +720,20 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Pagination (simple) ─────────────────────────────────────── */
+.admin-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.admin-pagination__info {
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+

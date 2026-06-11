@@ -6,8 +6,8 @@ export class AdminOrderController {
   }
 
   async list(req, res) {
-    const { status } = req.query;
-    const result = await this.listAllOrdersUseCase.execute({ status: status || 'all' });
+    const { status, page, limit } = req.query;
+    const result = await this.listAllOrdersUseCase.execute({ status: status || 'all', page, limit });
     res.json({ success: true, data: result });
   }
 

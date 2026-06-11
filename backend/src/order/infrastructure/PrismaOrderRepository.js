@@ -65,31 +65,44 @@ export class PrismaOrderRepository extends OrderRepository {
     return rows.map(r => this._mapToOrder(r));
   }
 
-  async findAll(filters) {
+  async findAll(filters, page = 1, limit = 15) {
     const where = {};
     if (filters.status && filters.status !== 'all') {
       where.state = filters.status.toUpperCase();
     }
 
-    const rows = await prisma.order.findMany({
-      where,
-      include: {
-        order_details: true,
-        user: true,
-      },
-      orderBy: { created_at: 'desc' },
-    });
+    const [rows, total] = await Promise.all([
+      prisma.order.findMany({
+        where,
+        include: {
+          order_details: true,
+          user: true,
+        },
+        orderBy: { created_at: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.order.count({ where }),
+    ]);
 
-    return rows.map(r => ({
-      id: r.id,
-      userId: r.user_id,
-      state: r.state,
-      total: Number(r.total),
-      direction: r.direction,
-      customer: r.user ? { name: r.user.name, email: r.user.email } : null,
-      items: r.order_details.length,
-      createdAt: r.created_at,
-    }));
+    return {
+      orders: rows.map(r => ({
+        id: r.id,
+        userId: r.user_id,
+        state: r.state,
+        total: Number(r.total),
+        direction: r.direction,
+        customer: r.user ? { name: r.user.name, email: r.user.email } : null,
+        items: r.order_details.length,
+        createdAt: r.created_at,
+      })),
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit) || 1,
+      },
+    };
   }
 
   async updateStatus(id, state) {

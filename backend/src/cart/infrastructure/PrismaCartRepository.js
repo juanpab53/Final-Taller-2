@@ -117,6 +117,7 @@ export class PrismaCartRepository extends CartRepository {
           author: item.book.author ? { id: item.book.author.id, name: item.book.author.name } : undefined,
         } : undefined,
       })),
+      // currently identical — total will differ when discounts/taxes are added
       subtotal: (row.cartItems || []).reduce((sum, item) => sum + item.unit_price * item.quantity, 0),
       total: (row.cartItems || []).reduce((sum, item) => sum + item.unit_price * item.quantity, 0),
     };
