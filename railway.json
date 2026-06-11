@@ -1,9 +1,5 @@
 {
   "rootDirectory": "backend",
-  "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "pnpm run build"
-  },
   "deploy": {
     "startCommand": "npx prisma migrate deploy && node src/server.js",
     "healthcheckPath": "/api/health",
