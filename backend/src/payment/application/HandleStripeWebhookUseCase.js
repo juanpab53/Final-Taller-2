@@ -1,7 +1,8 @@
 export class HandleStripeWebhookUseCase {
-  constructor({ paymentRepository, orderRepository }) {
+  constructor({ paymentRepository, orderRepository, cartRepository }) {
     this.paymentRepository = paymentRepository;
     this.orderRepository = orderRepository;
+    this.cartRepository = cartRepository;
   }
 
   async execute({ event }) {
@@ -37,6 +38,10 @@ export class HandleStripeWebhookUseCase {
       if (payment && payment.status === 'PENDING') {
         await this.paymentRepository.updateStatus(payment.id, 'CANCELLED');
         await this.orderRepository.updateStatus(payment.orderId, 'CANCELLED');
+        const cartId = session.metadata?.cartId;
+        if (cartId) {
+          await this.cartRepository.reactivateCart(cartId);
+        }
       }
 
       if (this.paymentRepository.saveStripeEvent) {

@@ -8,7 +8,7 @@ export class StripePaymentGateway extends StripeGateway {
     this.webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   }
 
-  async createCheckoutSession({ orderId, items, total, currency, successUrl, cancelUrl }) {
+  async createCheckoutSession({ orderId, cartId, items, total, currency, successUrl, cancelUrl }) {
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -26,7 +26,7 @@ export class StripePaymentGateway extends StripeGateway {
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
-      metadata: { orderId },
+      metadata: { orderId, cartId },
     });
 
     return {

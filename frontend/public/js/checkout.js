@@ -74,7 +74,7 @@ export function initCheckoutPage() {
   function renderItems(items) {
     itemsEl.innerHTML = items.map(item => {
       const book = item.book || {};
-      const lineTotal = (item.unit_price || 0) * (item.quantity || 1);
+      const lineTotal = (item.unitPrice || 0) * (item.quantity || 1);
       return `
         <li class="flex justify-between items-start">
           <div class="flex-1 min-w-0">

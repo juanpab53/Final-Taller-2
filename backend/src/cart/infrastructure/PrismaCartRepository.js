@@ -97,6 +97,13 @@ export class PrismaCartRepository extends CartRepository {
     });
   }
 
+  async reactivateCart(cartId) {
+    await prisma.cart.update({
+      where: { id: cartId },
+      data: { state: 'ACTIVE' },
+    });
+  }
+
   _mapToCart(row) {
     return {
       id: row.id,

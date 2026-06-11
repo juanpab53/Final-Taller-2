@@ -72,7 +72,7 @@ export function initCartPage() {
   function renderItems() {
     itemsEl.innerHTML = items.map(item => {
       const book = item.book || {};
-      const lineTotal = (item.unit_price || 0) * (item.quantity || 1);
+      const lineTotal = (item.unitPrice || 0) * (item.quantity || 1);
       const image = book.image_url || 'https://picsum.photos/seed/cart-' + (book.id || item.id) + '/80/80';
 
       return `
@@ -83,21 +83,19 @@ export function initCartPage() {
               <h3 class="cart-item__title">${book.name || 'Sin título'}</h3>
             </a>
             <p class="cart-item__author">${book.author?.name || ''}</p>
-            <p class="cart-item__price">${formatPrice(item.unit_price)}</p>
+            <p class="cart-item__price">${formatPrice(item.unitPrice)}</p>
           </div>
-          <div class="cart-item__actions">
-            <div class="cart-stepper">
-              <button class="cart-stepper__btn dec-btn" aria-label="Reducir cantidad">−</button>
-              <span class="cart-stepper__value">${item.quantity}</span>
-              <button class="cart-stepper__btn inc-btn" aria-label="Aumentar cantidad">+</button>
-            </div>
-            <button class="cart-item__remove" aria-label="Eliminar">
-              <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
-            </button>
+          <div class="cart-stepper">
+            <button class="cart-stepper__btn dec-btn" aria-label="Reducir cantidad">−</button>
+            <span class="cart-stepper__value">${item.quantity}</span>
+            <button class="cart-stepper__btn inc-btn" aria-label="Aumentar cantidad">+</button>
           </div>
           <div class="cart-item__line-total">
-            <span class="font-mono text-label-sm font-bold text-primary">${formatPrice(lineTotal)}</span>
+            <span>${formatPrice(lineTotal)}</span>
           </div>
+          <button class="cart-item__remove" aria-label="Eliminar">
+            <span class="material-symbols-outlined">delete</span>
+          </button>
         </li>
       `;
     }).join('');

@@ -142,12 +142,29 @@
 /* Cart item card */
 .cart-item {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--color-outline-variant);
 }
 
 .cart-item + .cart-item { margin-top: 2rem; }
+
+.cart-item__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cart-item__line-total {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
 
 .cart-item__cover {
   width: 6rem;
@@ -217,7 +234,7 @@
 }
 
 /* Quantity stepper */
-.qty-stepper {
+.qty-stepper, .cart-stepper {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -226,7 +243,7 @@
   padding: 0.25rem 0.5rem;
 }
 
-.qty-stepper__btn {
+.qty-stepper__btn, .cart-stepper__btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,7 +258,7 @@
   color: var(--color-primary);
 }
 
-.qty-stepper__value {
+.qty-stepper__value, .cart-stepper__value {
   font-family: var(--font-mono);
   font-size: 12px;
   min-width: 20px;
@@ -250,22 +267,25 @@
 
 /* Remove button */
 .cart-item__remove {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
   color: var(--color-secondary);
-  text-decoration: underline;
-  text-decoration-style: solid;
-  text-underline-offset: 3px;
-  transition: color var(--transition-fast);
-  background: none;
-  border: none;
+  background-color: transparent;
+  border: 1px solid transparent;
   cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
 }
 
-.cart-item__remove:hover { color: var(--color-error); }
+.cart-item__remove:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
 
 .cart-item__price {
   display: flex;

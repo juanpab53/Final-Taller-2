@@ -175,7 +175,7 @@ const getStatsUseCase = new GetStatsUseCase({ orderRepository, bookRepository })
 const adminOrderController = new AdminOrderController({ listAllOrdersUseCase, updateOrderStatusUseCase, getStatsUseCase });
 
 // ─── Payment ────────────────────────────────────────────
-const handleStripeWebhookUseCase = new HandleStripeWebhookUseCase({ paymentRepository, orderRepository });
+const handleStripeWebhookUseCase = new HandleStripeWebhookUseCase({ paymentRepository, orderRepository, cartRepository });
 const verifyPaymentUseCase = new VerifyPaymentUseCase({ stripeGateway, paymentRepository });
 const paymentController = new PaymentController({ stripeGateway, handleStripeWebhookUseCase, verifyPaymentUseCase });
 
