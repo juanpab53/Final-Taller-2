@@ -29,7 +29,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: fervor-secret
+                  name: fervor-secrets
                   key: POSTGRES_PASSWORD
           volumeMounts:
             - name: postgres-data
@@ -46,11 +46,11 @@ spec:
             periodSeconds: 5
           resources:
             requests:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "100m"
             limits:
-              memory: "256Mi"
-              cpu: "250m"
+              memory: "512Mi"
+              cpu: "500m"
       volumes:
         - name: postgres-data
           persistentVolumeClaim:

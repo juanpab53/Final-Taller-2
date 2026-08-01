@@ -27,7 +27,7 @@ spec:
             - configMapRef:
                 name: fervor-config
             - secretRef:
-                name: fervor-secret
+                name: fervor-secrets
           livenessProbe:
             httpGet:
               path: /api/health
@@ -42,8 +42,8 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "100m"
             limits:
-              memory: "256Mi"
-              cpu: "250m"
+              memory: "512Mi"
+              cpu: "500m"

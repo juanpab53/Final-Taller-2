@@ -8,3 +8,4 @@ metadata:
 data:
   NODE_ENV: "development"
   PORT: "3000"
+  CORS_ORIGIN: "http://localhost:5500"

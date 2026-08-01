@@ -17,6 +17,7 @@ ENV DATABASE_URL=$DATABASE_URL
 RUN npx prisma generate
 
 COPY backend/src ./src/
+COPY backend/scripts ./scripts/
 COPY frontend ./frontend/
 
 # Runtime stage
@@ -34,8 +35,9 @@ COPY --from=build /app/src ./src
 COPY --from=build /app/frontend ./frontend
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/prisma.config.ts ./
+COPY --from=build /app/scripts ./scripts
 
 EXPOSE 3000
 
 ENTRYPOINT ["tini", "--"]
-CMD ["sh", "-c", "npx prisma migrate deploy --config=./prisma.config.ts && node src/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy --config=./prisma.config.ts && node scripts/seed.js && node src/server.js"]
