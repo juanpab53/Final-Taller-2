@@ -3,7 +3,6 @@
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org)
 [![Express](https://img.shields.io/badge/express-5.2-blue)](https://expressjs.com)
 [![Prisma](https://img.shields.io/badge/prisma-7-orange)](https://prisma.io)
-[![License](https://img.shields.io/badge/license-MIT-gray)]()
 
 Tienda de libros online con catálogo, carrito de compras, pagos con Stripe y panel administrativo.
 
