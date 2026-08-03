@@ -5,7 +5,7 @@ export class CreateBookDTO {
     if (!name || typeof name !== 'string' || !name.trim()) {
       throw new ValidationError('Book name is required.');
     }
-    if (price == null || typeof price !== 'number' || price < 0) {
+    if (price == null || typeof price !== 'number' || !Number.isFinite(price) || price < 0) {
       throw new ValidationError('Price must be a non-negative number.');
     }
     if (stock == null || !Number.isInteger(stock) || stock < 0) {

@@ -5,7 +5,7 @@ export class UpdateBookDTO {
     if (name !== undefined && (!name || typeof name !== 'string' || !name.trim())) {
       throw new ValidationError('Book name cannot be empty.');
     }
-    if (price !== undefined && (typeof price !== 'number' || price < 0)) {
+    if (price !== undefined && (typeof price !== 'number' || !Number.isFinite(price) || price < 0)) {
       throw new ValidationError('Price must be a non-negative number.');
     }
     if (stock !== undefined && (!Number.isInteger(stock) || stock < 0)) {

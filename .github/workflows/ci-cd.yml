@@ -38,11 +38,9 @@ jobs:
 
       - name: Run lint
         run: pnpm lint
-        continue-on-error: true
 
       - name: Run typecheck
         run: pnpm typecheck
-        continue-on-error: true
 
   test:
     name: Tests
@@ -71,7 +69,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test
-        continue-on-error: true
 
   build-and-push:
     name: Build & Push Docker Image
