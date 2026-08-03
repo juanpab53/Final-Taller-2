@@ -1,0 +1,11 @@
+.git
+backend/.env
+*/node_modules/
+documentation/
+*.md
+railway.json
+.github/
+k8s/
+scripts/
+.env*
+!backend/.env.example

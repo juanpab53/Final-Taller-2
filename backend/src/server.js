@@ -91,6 +91,8 @@ import { HandleStripeWebhookUseCase } from "./payment/application/HandleStripeWe
 import { VerifyPaymentUseCase } from "./payment/application/VerifyPaymentUseCase.js";
 import { PaymentController } from "./payment/infrastructure/PaymentController.js";
 import { createPaymentRouter } from "./payment/infrastructure/PaymentRouter.js";
+import { disconnectPrisma } from "./database/prismaClient.js";
+import { prisma } from "./database/prismaClient.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -207,6 +209,15 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
+app.get("/api/ready", async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: "ok", database: "connected", timestamp: new Date().toISOString() });
+  } catch {
+    res.status(503).json({ status: "error", database: "disconnected", timestamp: new Date().toISOString() });
+  }
+});
+
 app.use("/admin", express.static(adminPath));
 app.use("/shared", express.static(sharedPath));
 app.use("/", express.static(publicPath));
@@ -217,7 +228,34 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   const mode = process.env.NODE_ENV || 'development';
   console.log(`\n  FERVOR Bookstore — http://localhost:${PORT} (${mode})\n`);
 });
+
+let isShuttingDown = false;
+
+async function gracefulShutdown(signal) {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
+  console.log(`\n${signal} received — shutting down gracefully...`);
+
+  server.close(async () => {
+    console.log('  HTTP server closed.');
+    try {
+      await disconnectPrisma();
+      console.log('  Database connection closed.');
+    } catch (err) {
+      console.error('  Error closing database:', err);
+    }
+    process.exit(0);
+  });
+
+  setTimeout(() => {
+    console.error('  Forced shutdown after timeout.');
+    process.exit(1);
+  }, 10_000).unref();
+}
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
